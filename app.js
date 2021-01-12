@@ -34,7 +34,17 @@ var options = {
   user     : process.env.DB_USER,
   password : process.env.DB_PASS,
   database : process.env.DB_NAME,
-  port: process.env.PORT
+  clearExpired: true,
+  createDatabaseTable: true,
+  charset: 'utf8mb4_bin',
+	schema: {
+		tableName: 'sessions',
+		columnNames: {
+			session_id: 'session_id',
+			expires: 'expires',
+			data: 'data'
+		}
+	}
 }
 
 let sessConnect = mysql.createPool(options); // or mysql.createPool(options);
