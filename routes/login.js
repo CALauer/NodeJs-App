@@ -26,9 +26,11 @@ router.post('/login', function(req, res){
                 } else if (bcrypt.compareSync(randomString, dbpass)){
                     res.render('login-form',{alertMsg:"Password Incorrect"});
                     console.log("2nd else")
+                    db.releaseConnection(db);
                 } else {
                     res.render('login-form',{alertMsg:"Email Incorrect"});
                     console.log("3rd else")
+                    db.releaseConnection(db);
                 }         
         }
     })  
