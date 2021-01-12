@@ -8,10 +8,8 @@ router.get('/login', function(req, res, next) {
   res.render('login-form');
 });
 router.post('/login', function(req, res){
-    let email = req.body.email_address;
-    let password = req.body.password;
-    let sql='SELECT * FROM users WHERE email =?';
-
+    var email = req.body.email_address;
+    var password = req.body.password;
     db.query('SELECT * FROM users WHERE email = ?',[email], async function (error, results, fields) {
         if (error) {
           res.send({
