@@ -1,18 +1,15 @@
 require('dotenv').config()
 
-const mysql = require('mysql2/promise')
 const morgan = require('morgan');
 const express = require('express')
+const app = express()
+const mysql = require('mysql2/promise')
+
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 const router = express.Router()
 const bodyParser=require('body-parser');
 var PORT = process.env.PORT || 5000;
-const app = express()
-
-
-
-
 
 
 
@@ -36,7 +33,8 @@ var options = {
   host     : process.env.DB_HOST,
   user     : process.env.DB_USER,
   password : process.env.DB_PASS,
-  database : process.env.DB_NAME
+  database : process.env.DB_NAME,
+  port: process.env.PORT
 }
 
 let sessConnect = mysql.createPool(options); // or mysql.createPool(options);
@@ -48,8 +46,8 @@ app.use(session({
   key: 'session_cookie_name',
   secret: 'session_cookie_secret',
   store: sessionStore,
-  resave: true,
-  saveUninitialized: true
+  resave: false,
+  saveUninitialized: false
 }))
 
 process.on('uncaughtException', function (err) {
