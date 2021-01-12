@@ -38,7 +38,8 @@ var connection = mysql.createPool(options); // or mysql.createPool(options);
 var sessionStore = new MySQLStore({}, connection);
 
 app.use(session({
-    store: sessionStore
+    store: sessionStore,
+    secret: '1234567'
   }))
 
 
