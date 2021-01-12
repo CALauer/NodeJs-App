@@ -16,7 +16,7 @@ router.post('/login', function(req, res){
             "code":400,
           })
         }else{
-          if(results.length >0){
+          if(results.length > 0){
             const comparision = await bcrypt.compare(password, results[0].password)
             if(comparision){
                 req.session.loggedinUser= true;
