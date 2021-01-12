@@ -18,18 +18,14 @@ router.post('/login', function(req, res){
                 req.session.loggedinUser= true;
                 req.session.email = email;
                 res.redirect('/dashboard');
-                db.end()
             }
             else {
-                db.end()
                 res.render('login-form',{alertMsg:"Password Incorrect"});
                 
             }
         }else{
-            db.end()
             res.render('login-form',{alertMsg:"Email Incorrect"});
         }
-        db.end()
     })
 })
 module.exports = router;
