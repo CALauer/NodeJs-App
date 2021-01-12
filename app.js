@@ -1,24 +1,31 @@
 require('dotenv').config()
-const db_host = process.env.DB_HOST
-const db_user = process.env.DB_USER
-const db_password = process.env.DB_PASS
-const db_name = process.env.DB_NAME 
+
+const mysql = require('mysql2/promise')
 const morgan = require('morgan');
 const express = require('express')
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 const router = express.Router()
 const bodyParser=require('body-parser');
-const app = express()
 var PORT = process.env.PORT || 5000;
+const app = express()
+
+
+
+
+
+
+
 // My Defined Routes
 const loginRouter = require('./routes/login');
 const registrationRouter = require('./routes/registration');
 const dashboardRouter = require('./routes/dashboard');
 const logoutRouter = require('./routes/logout');
 const globalRouter = require('./routes/global.js');
+
+
+
 var sessionStore = new MySQLStore(session);
-let mysql = require('mysql2/promise')
 app.set('trust proxy', 1);
 app.set('view engine','ejs');
 app.use(express.static('views'))
@@ -28,19 +35,26 @@ app.use(bodyParser.json());
 
 var options = {
   connectionLimit : 10,
-  host     : db_host,
-  user     : db_user,
-  password : db_password,
-  database : db_name
+  host     : process.env.DB_HOST,
+  user     : process.env.DB_USER,
+  password : process.env.DB_PASS,
+  database : process.env.DB_NAME
 }
 
 var connection = mysql.createPool(options); // or mysql.createPool(options);
 var sessionStore = new MySQLStore({}, connection);
 
+app.set('trust proxy', 1) 
+// trust first proxy
 app.use(session({
-    store: sessionStore,
-    secret: '1234567'
-  }))
+  key: 'session_cookie_name',
+  secret: 'session_cookie_secret',
+  store: sessionStore,
+  resave: true,
+  saveUninitialized: true
+}))
+
+
   app.use(function(req,res,next){
     if(!req.session){
         return next(new Error('Oh no')) //handle error
