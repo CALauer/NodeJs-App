@@ -7,7 +7,7 @@ var bcrypt = require('bcryptjs');
 router.get('/login', function(req, res, next) {
   res.render('login-form');
 });
-router.post('/login', function(req, res){
+router.post('/login', async function(req, res){
     var email = req.body.email_address;
     var password = req.body.password;
     db.query('SELECT * FROM users WHERE email = ?',[email], async function (error, results, fields) {
