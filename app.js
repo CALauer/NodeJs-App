@@ -52,7 +52,9 @@ app.use(session({
   saveUninitialized: true
 }))
 
-
+process.on('uncaughtException', function (err) {
+  console.log(err);
+}); 
   app.use(function(req,res,next){
     if(!req.session){
         return next(new Error('Oh no')) //handle error
