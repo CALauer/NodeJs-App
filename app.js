@@ -17,7 +17,6 @@ app.set('view engine','ejs');
 app.use(express.static('views'))
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ 
     secret: '123456cat',
     resave: false,
