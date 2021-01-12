@@ -8,7 +8,6 @@ var MySQLStore = require('express-mysql-session')(session);
 const router = express.Router()
 const bodyParser=require('body-parser');
 var PORT = process.env.PORT || 5000;
-var port = process.env.port
 const app = express()
 
 
@@ -23,8 +22,6 @@ const registrationRouter = require('./routes/registration');
 const dashboardRouter = require('./routes/dashboard');
 const logoutRouter = require('./routes/logout');
 const globalRouter = require('./routes/global.js');
-
-
 
 var sessionStore = new MySQLStore(session);
 app.set('trust proxy', 1);
@@ -42,8 +39,8 @@ var options = {
   database : process.env.DB_NAME
 }
 
-var connection = mysql.createPool(options); // or mysql.createPool(options);
-var sessionStore = new MySQLStore({}, connection);
+let sessConnect = mysql.createPool(options); // or mysql.createPool(options);
+var sessionStore = new MySQLStore({}, sessConnect);
 
 app.set('trust proxy', 1) 
 // trust first proxy
