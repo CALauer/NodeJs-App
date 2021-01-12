@@ -4,7 +4,7 @@ const db_password = process.env.DB_PASS
 const db_name = process.env.DB_NAME 
 
 var mysql      = require('mysql');
-var connection = mysql.createConnection({
+var conn = mysql.createConnection({
   host     : db_host,
   user     : db_user,
   password : db_password,
