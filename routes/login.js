@@ -17,7 +17,7 @@ router.post('/login', function(req, res){
             let dbpass = data[0].password
             if(bcrypt.compareSync(password,dbpass)){
                 req.session.loggedinUser= true;
-                req.session.email = req.body.email;
+                req.session.email = email; 
                 res.redirect('/dashboard');
             }
             else {
