@@ -38,13 +38,7 @@ var connection = mysql.createPool(options); // or mysql.createPool(options);
 var sessionStore = new MySQLStore({}, connection);
 
 app.use(session({
-    store: sessionStore,
-    secure: true,
-    secret: '123456cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 60000 },
-    resave: false
+    store: sessionStore
   }))
 
 
