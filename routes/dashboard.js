@@ -7,7 +7,7 @@ router.get('/dashboard', function(req, res, next) {
         console.log(req.session)
         console.log(req.session.email)
     }else{
-        res.redirect('/login');
+        res.redirect('/');
     }
 });
 module.exports = router;

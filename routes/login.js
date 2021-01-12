@@ -13,23 +13,41 @@ router.post('/login', function(req, res){
     let sql='SELECT * FROM users WHERE email =?';
     db.query(sql, [email, password], function (err, data, fields) {
         console.log("queried")
-        if(err) throw err
-        if(data.length > 0){
-            let dbpass = data[0].password
-            if(bcrypt.compareSync(password,dbpass)){
-                req.session.loggedinUser= true;
-                req.session.email = email;
-                console.log(email)
-                res.redirect('./dashboard');
-                db.end()
-            }
-            else {
-                res.render('login-form',{alertMsg:"Password Incorrect"});
-                
-            }
-        }else{
-            res.render('login-form',{alertMsg:"Email Incorrect"});
+        console.log(data.length)
+        let randomString = bcrypt.hashSync('/,;tT5%6', 8);
+            if(data.length > 0){
+                let dbpass = data[0].password
+                if(bcrypt.compareSync(password,dbpass)){
+                    req.session.loggedinUser= true;
+                    req.session.email = email;
+                    console.log("Logged in")
+                    db.releaseConnection(db);
+                    res.redirect('/dashboard'), {};
+                } else if (bcrypt.compareSync(randomString, dbpass)){
+                    res.render('login-form',{alertMsg:"Password Incorrect"});
+                    console.log("2nd else")
+                } else {
+                    res.render('login-form',{alertMsg:"Email Incorrect"});
+                    console.log("3rd else")
+                }         
         }
-    })
+    })  
 })
+//             if(data[0].length > 0){
+//             let dbpass = data[0].password
+//             if(bcrypt.compareSync(password,dbpass)){
+//                 req.session.loggedinUser= true;
+//                 req.session.email = email;
+//                 console.log(email)
+//                 res.redirect('dashboard');
+//             }
+//             else {
+//                 res.render('login-form',{alertMsg:"Password Incorrect"});
+                
+//             }
+//         }else{
+//             res.render('login-form',{alertMsg:"Email Incorrect"});
+//         }
+//     })
+// })
 module.exports = router;
