@@ -21,6 +21,7 @@ router.post('/login', function(req, res){
                 req.session.email = email;
                 console.log(email)
                 res.redirect('./dashboard');
+                db.end()
             }
             else {
                 res.render('login-form',{alertMsg:"Password Incorrect"});
