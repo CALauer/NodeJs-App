@@ -14,7 +14,7 @@ router.post('/login', function(req, res){
         if (error) {
           res.send({
             "code":400,
-            "failed":"error ocurred"
+            "failed":"error ocurred, 13-17"
           })
         }else{
           if(results.length >0){
