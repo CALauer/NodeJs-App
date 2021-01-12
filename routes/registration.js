@@ -20,26 +20,31 @@ router.post('/register', function(req, res, next) {
     }
 // check unique email address
 var sql='SELECT * FROM users WHERE email =?';
-db.query(sql, [inputData.email_address] ,function (err, data, fields) {
- if(err) throw err
- if(data.length>1){
-     var msg = inputData.email_address+ "was already exist";
- }else if(inputData.confirm_password != inputData.password){
-    var msg ="Password & Confirm Password is not Matched";
- }else{
-    inputData ={
-        email: req.body.email_address,
-        password: hashedPass
+    db.query(sql, [inputData.email_address] ,function (err, data, fields) {
+    if(err) throw err
+    if(data.length>1){
+        var msg = inputData.email_address+ "was already exist";
+        db.end()
+    }else if(inputData.confirm_password != inputData.password){
+        var msg ="Password & Confirm Password is not Matched";
+        db.end()
+    }else{
+        inputData ={
+            email: req.body.email_address,
+            password: hashedPass
+        }
+        // save users data into database
+        var sql = 'INSERT INTO users SET ?';
+    db.query(sql, inputData, function (err, data) {
+        if (err) throw err;
+            });
+    var msg ="Your are successfully registered";
     }
-    // save users data into database
-    var sql = 'INSERT INTO users SET ?';
-   db.query(sql, inputData, function (err, data) {
-      if (err) throw err;
-           });
-  var msg ="Your are successfully registered";
- }
- res.render('registration-form',{alertMsg:msg});
-})
-     
+    res.render('registration-form',{alertMsg:msg});
+    db.end()
+
+    })
+    
 });
+
 module.exports = router;
