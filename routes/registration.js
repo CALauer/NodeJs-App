@@ -10,24 +10,21 @@ router.get('/register', function(req, res, next) {
 
 // to store user input detail on post request
 router.post('/register', function(req, res, next) {
-    inputData ={
+    let inputData ={
         email: req.body.email,
-        password: password,
+        password: req.body.pssword,
         confirm_password: confirmedPassword
     }
-    var password = req.body.password;
-    var email = req.body.email
-    console.log(email)
     var confirmedPassword = req.body.confirm_password
-    hashedPass = bcrypt.hashSync(password, 8);
+    hashedPass = bcrypt.hashSync(confirmedPassword, 8);
 
 // check unique email address
 var sql='SELECT * FROM users WHERE email =?';
-db.query(sql, email, function (err, data, fields) {
+db.query(sql, inputData.email, function (err, data, fields) {
  if(err) throw err
  console
  if(data.length > 1){
-     var msg = email + "already exists";
+     var msg = req.body.email + "already exists";
      
  }else if(inputData.confirm_password != inputData.password){
     var msg ="Password & Confirm Password is not Matched";
