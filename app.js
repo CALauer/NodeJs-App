@@ -8,6 +8,7 @@ var MySQLStore = require('express-mysql-session')(session);
 const router = express.Router()
 const bodyParser=require('body-parser');
 var PORT = process.env.PORT || 5000;
+var port = process.env.port
 const app = express()
 
 
@@ -39,7 +40,7 @@ var options = {
   user     : process.env.DB_USER,
   password : process.env.DB_PASS,
   database : process.env.DB_NAME,
-  port: process.env.PORT
+  port: process.env.port
 }
 
 var connection = mysql.createPool(options); // or mysql.createPool(options);
