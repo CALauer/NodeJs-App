@@ -24,9 +24,10 @@ db.query(sql, [inputData.email_address] ,function (err, data, fields) {
  if(err) throw err
  if(data.length>1){
      var msg = inputData.email_address+ "was already exist";
-     
+     db.releaseConnection(db);
  }else if(inputData.confirm_password != inputData.password){
     var msg ="Password & Confirm Password is not Matched";
+    db.releaseConnection(db);
  }else{
     inputData ={
         email: req.body.email_address,
@@ -36,10 +37,12 @@ db.query(sql, [inputData.email_address] ,function (err, data, fields) {
     var sql = 'INSERT INTO users SET ?';
    db.query(sql, inputData, function (err, data) {
       if (err) throw err;
+      db.releaseConnection(db);
            });
   var msg ="Your are successfully registered";
  }
  res.render('registration-form',{alertMsg:msg});
+ db.releaseConnection(db);
 })
      
 });
