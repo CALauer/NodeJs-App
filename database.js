@@ -1,6 +1,6 @@
 
 require('dotenv').config()
-var mysql = require('mysql');
+var mysql = require('mysql2');
 
 var connection = mysql.createPool({
   connectionLimit : 10,
@@ -10,5 +10,12 @@ var connection = mysql.createPool({
   database : process.env.DB_NAME,
   waitForConnections: true
 });
+
+connection.query(
+  'SELECT * FROM `users`',
+  function(err, results) {
+    console.log(results);
+  }
+);
 
 module.exports = connection;
