@@ -1,0 +1,227 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Karla', sans-serif;
+    list-style-type: none;
+}
+
+:root {
+    --main-bg-color: rgb(0, 0, 0);
+    --nav-bg-color: rgba(15, 15, 15);
+    --main-font-color: rgb(214, 214, 214);
+    --main-heading-color: rgb(255, 92, 51);
+    --secondary-heading-color: rgb(255, 255, 255);
+    --main-link-color: rgb(255, 148, 122);
+    --main-button-color: rgb(255, 128, 96);
+    --main-hightlight-color: rgb(255, 102, 0);
+    --main-font-color: rgb(214, 214, 214);
+    --heading-size-4: 3em;
+    --heading-size-3: 2.5em;
+    --heading-size-2: 2em;
+    --heading-size-1: 1.5em;
+    --link-size: 1em;
+    --nav-link-size: .9em;
+    --global-wrapper: 80%;
+    --two-columns: 1fr 1fr;
+    --one-column: 1fr 1fr;
+
+}
+h1 {
+    margin-bottom: 10px;
+    font-size: var(--heading-size-4);
+    color: var(--main-heading-color);
+}
+h2 {
+    margin-bottom: 10px;
+    font-size: var(--heading-size-3);
+    color: var(--secondary-heading-color);
+    
+}
+h3 {
+    margin-bottom: 10px;
+    font-size: var(--heading-size-2);
+    color: var(--main-heading-color);
+}
+h4 {
+    margin: 10px 0px;
+    font-size: var(--heading-size-1);
+    color: var(--main-heading-color);
+    
+}
+p {
+    margin-bottom: 10px;
+}
+a {
+    color: var(--main-link-color);
+    text-decoration: none;
+}
+
+body {
+    background-color: var(--main-bg-color);
+    color: var(--main-font-color);
+}
+.global-wrapper {
+    display: grid;
+    justify-self: center;
+    width: var(--global-wrapper);
+    height: 100%;
+}
+
+/* NAVIGATION */
+nav {
+    display: grid;
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    align-content: center;
+    background-color: var(--nav-bg-color)
+}
+.nav-wrapper {
+        display: grid;
+        justify-self: center;
+        width: 90%;
+        height: 100%;
+}
+.two-columns {
+    display: grid;
+    grid-template-columns:var(--two-columns);
+}
+.one-column {
+    display: grid;
+    grid-template-columns:var(--one-column);
+}
+.justify-self-right {
+    justify-self: right;
+}
+.logo-nav-link {
+    display: grid;
+    color: white;
+    text-decoration: none;
+    font-size: var(--heading-size-2)
+}
+.desktop-nav-link {
+    display: grid;
+    align-self: center;
+    color: rgb(195, 195, 195);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    font-size: var(--nav-link-size);
+}
+.desktop-nav-link:hover {
+    color: var(--main-hightlight-color);
+    text-decoration: none;
+}
+
+.desktop-navigation-unordered {
+    display: inline-block;
+    margin-left: 30px;
+}
+.desktop-navigation-nav-list {
+    display: inline-grid;
+    height: 40px;
+    padding-left: 35px;
+}
+.nav-logo {
+    display: inline-block;
+    vertical-align: text-bottom;
+    height: 20px;
+}
+.account-drop-down-menu {
+    display: none;
+    position: fixed;
+    background: var(--nav-bg-color);
+    width: max-content;
+    right: 5%;
+    padding: 2px 10px;
+    border-top: 1px solid black;
+}
+.account-drop-down-menu-links {
+    display: grid;
+    border-top: 1px solid black;
+    font-size: .8em;
+    padding: 10px 0px;
+}
+.to-login-page-btn {
+    display: grid;
+    margin-top: 5px;
+    align-content: center;
+    padding: 5px;
+    height: 25px;
+    width: 170px;
+    text-align: center;
+    background: var(--main-button-color);
+    color: var(--main-bg-color);
+}
+/* MAIN */
+
+main {
+    display: grid;
+    background-image: url('../images/viabull-bg.jpg');
+    height: 100vh;
+}
+
+.main-container {
+    display: grid;
+    align-content: flex-start;
+    margin-top: 150px;
+}
+/* FOOTER */
+footer {
+    display: grid;
+    justify-content: center;
+}
+/* FORMS */ 
+.center-form-wrapper {
+    display: grid;
+    justify-self: center;
+    width: max-content;
+    background: var(--main-nav-color);
+    padding: 50px;
+    border: 1px solid var(--main-heading-color)
+
+}
+.form-style-1 {
+    display: grid;
+    width: 400px;
+    justify-self: center;
+}
+input[type="text"], input[type="password"], input[type="email"] {
+	border: none;
+	height: 35px;
+	width: 100%;
+	margin: 10px 0px;
+	border-radius: 2px;
+	border: none;
+	background:rgb(14, 7, 0);;
+	font-size: 1.1em;
+	padding: 5px;
+	color: var(--light-grey-color);
+}
+input[type="text"]:focus, input[type="password"]:focus,input[type="email"]:focus, input[type="tel"]:focus  {
+	border: solid .5px var(--orange-color);
+	outline: none;
+}
+.btn-style-1 {
+    height: 35px;
+}
+/* Image Properties */
+.img-75 {
+    display: grid;
+    justify-self: center;
+    width: 75%;
+}
+.img-50 {
+    display: grid;
+    justify-self: center;
+    width: 50%;
+}
+.registration-logo {
+    display: grid;
+    justify-self: center;
+    width: 200px;
+    margin-bottom: 25px;
+}
