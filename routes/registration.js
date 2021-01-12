@@ -22,7 +22,7 @@ router.post('/register', function(req, res, next) {
     }
 // check unique email address
 var sql='SELECT * FROM users WHERE email =?';
-db.query(sql, [email] ,function (err, data, fields) {
+db.query(sql, email ,function (err, data, fields) {
  if(err) throw err
  if(data.length > 1){
      var msg = inputData.email + "was already exist";
