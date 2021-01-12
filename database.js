@@ -6,6 +6,9 @@ var connection = mysql.createPool({
     user     : 'chrislc9_admin', // MYSQL USERNAME
     password : ',6Lc3.T)oD]*', // MYSQL PASSWORD
     database : 'chrislc9_db1' // MYSQL DB NAME
-}).promise();
+})
 
+connection.execute("SELECT * FROM users", function(err, rows, fields) {
+  console.log(rows)
+})
 module.exports = connection;
