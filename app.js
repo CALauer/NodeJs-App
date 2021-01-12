@@ -41,6 +41,12 @@ app.use(session({
     store: sessionStore,
     secret: '1234567'
   }))
+  app.use(function(req,res,next){
+    if(!req.session){
+        return next(new Error('Oh no')) //handle error
+    }
+    next() //otherwise continue
+    });
 
 
 // Routes
