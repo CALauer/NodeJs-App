@@ -10,12 +10,13 @@ router.get('/login', function(req, res, next) {
 router.post('/login', function(req, res){
     let email = req.body.email_address;
     let password = req.body.password;
-    let sql='SELECT email FROM users WHERE email =?';
+    let sql='SELECT * FROM users WHERE email =?';
     db.query(sql, [email, password], function (err, data, fields) {
         console.log("queried")
         console.log(data.length)
         let randomString = bcrypt.hashSync('/,;tT5%6', 8);
-            if(data < 0){
+        console.log(data.length)
+            if(data.length > 0){
                 let dbpass = data[0].password
                 if(bcrypt.compareSync(password,dbpass)){
                     req.session.loggedinUser= true;
