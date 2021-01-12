@@ -21,9 +21,7 @@ router.post('/register', function(req, res, next) {
 // check unique email address
 var sql='SELECT * FROM users WHERE email =?';
 db.query(sql, inputData.email, function (err, data, fields) {
- if(err) throw err
- console.log(err)
- if(data.length > 1){
+ if(data.length > 0){
      var msg = req.body.email + "already exists";
      
  }else if(inputData.confirm_password != inputData.password){
