@@ -20,16 +20,16 @@ router.post('/register', function(req, res, next) {
     }
 // check unique email address
 var sql='SELECT * FROM users WHERE email =?';
-db.query(sql, [inputData.email_address] ,function (err, data, fields) {
+db.query(sql, [inputData.email] ,function (err, data, fields) {
  if(err) throw err
  if(data.length>1){
-     var msg = inputData.email_address+ "was already exist";
+     var msg = inputData.email+ "was already exist";
      
  }else if(inputData.confirm_password != inputData.password){
     var msg ="Password & Confirm Password is not Matched";
  }else{
     inputData ={
-        email: req.body.email_address,
+        email: req.body.email,
         password: hashedPass
     }
     // save users data into database
