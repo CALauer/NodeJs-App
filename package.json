@@ -1,12 +1,12 @@
 {
-  "name": "learningnew",
+  "name": "viabull",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Economy Web Application",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "author": "",
+  "author": "Chris Lauer",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
