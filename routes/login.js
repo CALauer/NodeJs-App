@@ -13,7 +13,6 @@ router.post('/login', function(req, res){
     let sql='SELECT * FROM users WHERE email =?';
     db.query(sql, [email, password], function (err, data, fields) {
         let randomString = bcrypt.hashSync('/,;tT5%6', 8);
-        console.log(data.length)
             if(data.length > 0){
                 let dbpass = data[0].password
                 if(bcrypt.compareSync(password,dbpass)){
