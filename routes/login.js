@@ -8,36 +8,27 @@ router.get('/login', function(req, res, next) {
   res.render('login-form');
 });
 router.post('/login', function(req, res){
-    var email = req.body.email_address;
-    var password = req.body.password;
-    db.query('SELECT * FROM users WHERE email = ?',[email], async function (error, results, fields) {
-        if (error) {
-          res.send({
-            "code":400,
-            "failed":"error ocurred, 13-17"
-          })
-        }else{
-          if(results.length >0){
-            const comparision = await bcrypt.compare(password, results[0].password)
-            if(comparision){
+    let email = req.body.email_address;
+    let password = req.body.password;
+    let sql='SELECT * FROM users WHERE email =?';
+    db.query(sql, [email, password], function (err, data, fields) {
+        console.log("queried")
+        if(err) throw err
+        if(data.length > 0){
+            let dbpass = data[0].password
+            if(bcrypt.compareSync(password,dbpass)){
                 req.session.loggedinUser= true;
                 req.session.email = email;
-                res.redirect('/dashboard')
+                console.log("queried")
+                res.redirect('/dashboard');
             }
-            else{
-              res.send({
-                   "code":204,
-                   "success":"Email and password does not match"
-              })
+            else {
+                res.render('login-form',{alertMsg:"Password Incorrect"});
+                
             }
-          }
-          else{
-            res.send({
-              "code":206,
-              "success":"Email does not exits"
-                });
-          }
+        }else{
+            res.render('login-form',{alertMsg:"Email Incorrect"});
         }
-        });
     })
+})
 module.exports = router;
