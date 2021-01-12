@@ -10,7 +10,6 @@ var connection = mysql.createPool({
   database : process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
 });
 
 module.exports = connection;
