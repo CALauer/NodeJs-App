@@ -8,7 +8,5 @@ var connection = mysql.createPool({
     database : 'chrislc9_db1' // MYSQL DB NAME
 })
 
-connection.execute("SELECT * FROM users", function(err, rows, fields) {
-  console.log(rows)
-})
+
 module.exports = connection;

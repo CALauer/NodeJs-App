@@ -47,9 +47,5 @@ $('#myAccount-dropdown-link').click('click', function() {
         }
     });
 
-        
-
-
-
 console.log("working")
 

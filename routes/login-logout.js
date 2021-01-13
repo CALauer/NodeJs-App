@@ -4,8 +4,16 @@ var router = express.Router();
 var db = require('../database');
 var bcrypt = require('bcryptjs');
 /* GET users listing. */
-router.get('/login', function(req, res, next) {
+router.get('/login-logout', function(req, res, next) {
+  if(req.session.loggedinUser == true){
+    req.session.loggedinUser = false
+    res.redirect('/')
+    console.log(req.session)
+    console.log(req.session.email)
+}else{
   res.render('login-form');
+}
+  
 });
 router.post('/login', async function(req, res){
     var email = req.body.email_address;
