@@ -6,10 +6,40 @@
     </header>
     <main>
     <div class="global-wrapper">
-        <div class="main-container ">
-            <h2>Welcome to your dashboard</h2>
-            <p><b>Login Email</b> - <%=email %></p>
+        <div class="main-container two-columns-style-2">
+            <div>
+                <div class="account-navigation-column">
+                <h3>Account Overview</h3>
+                <p><b>Account Email: </b><%=email %></p>
+                <ul class="account-nav-ul">
+                    <li class="account-main-nav">
+                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> Inbox
+                    </li>
+                    <li class="account-main-nav">
+                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> My Transactions
+                    </li>
+                    <li class="account-main-nav">
+                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> Payment Methods
+                    </li>
+                    <li class="account-main-nav">
+                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> Portfolio
+                    </li>
+                    <li class="account-main-nav">
+                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> Open Orders
+                    </li>
+                    <li class="account-main-nav">
+                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> Place Holder
+                    </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="account-main-area">
+                <h4>Your Information</h4>
+            </div>
+
+            </ul>
         </div>
     </div>
     </main>
+
 <%- include('./partials/footer'); %>

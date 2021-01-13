@@ -22,15 +22,17 @@ app.use(session({
     resave: false,
     keys: ['key1', 'key2'],
     saveUninitialized: true,
-    cookie: { maxAge: 60000 }
+    cookie: { maxAge: 60000 * 60 }
   }))
 
 app.use('/', function(req, res, next) {
   if(req.session.loggedinUser == true){
-    res.app.locals.menuBtn = "Logout"
+    app.locals.menuBtn = "Logout"
+    app.locals.test = "My Account"
     next()
   }else{
-    res.app.locals.menuBtn = "Login"
+   app.locals.menuBtn = "Login"
+   app.locals.test = "Create Free Account"
     next()
   }
 } )

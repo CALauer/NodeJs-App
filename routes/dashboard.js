@@ -4,8 +4,6 @@ var router = express.Router();
 router.get('/dashboard', function(req, res, next) {
     if(req.session.loggedinUser == true){
         res.render('dashboard',{email:req.session.email})
-        console.log(req.session)
-        console.log(req.session.email)
     }else{
         res.redirect('/');
     }
