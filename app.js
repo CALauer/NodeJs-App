@@ -24,11 +24,14 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 60000 * 60 }
   }))
-
+  app.use(function (req, res, next) {
+    res.locals.currentUser = req.session.loggedinUser;
+    next();
+});
 app.use('/', function(req, res, next) {
   if(req.session.loggedinUser == true){
     app.locals.menuBtn = "Logout"
-    app.locals.test = "My Account"
+    app.locals.test = ""
     next()
   }else{
    app.locals.menuBtn = "Login"
