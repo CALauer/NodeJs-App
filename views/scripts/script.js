@@ -37,6 +37,9 @@ $( document ).ready(function() {
         else {
             return;
         }
+
+
+
 });    
 
 $('#myAccount-dropdown-link').click('click', function() {
@@ -66,3 +69,33 @@ console.log(title)
                 }
             })
     });
+// RICH TEXT FORMATTER
+$('a').on('click', function() {
+    var accountOverview =  $('.account-overview')
+    var accountWritePost = $('.account-write-post')
+    var accountPosts = $('.account-posts')
+    console.log(this.id)
+    if(this.id == "post_write") {
+        accountWritePost.fadeIn().css("display", "grid")
+        accountPosts.css("display", "none")
+        accountOverview.css("display", "none")
+    } else if (this.id == "my_posts") {
+        accountPosts.fadeIn().css("display", "grid")
+        accountWritePost.css("display", "none")
+        accountOverview.css("display", "none")
+    }
+    else if (this.id == "account_overview") {
+        accountOverview.fadeIn().css("display", "grid")
+        accountWritePost.css("display", "none")
+        accountPosts.css("display", "none")
+    }
+    else {
+        return
+    }
+}) 
+
+//   $("#my_posts").click(function(){
+//     $(".account-overview").toggle();
+//     $(".account-write-post").toggle();
+//     $(".account-write-post").toggle();
+//   });

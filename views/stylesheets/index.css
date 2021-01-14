@@ -171,7 +171,7 @@ main {
     display: grid;
     background-image: url('../images/viabull-bg.jpg');
     background-repeat: no repeat;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .main-container {
@@ -218,18 +218,20 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus,input[typ
 .user-post-form {
     width: 60%;
 }
-textarea {
+.blog-post_textarea {
     border: none;
 	width: 100%;
 	margin: 10px 0px;
 	border-radius: 2px;
 	border: none;
 	background:rgb(14, 7, 0);;
-	font-size: 1.1em;
-	padding: 5px;
+	font-size: inherit;
+    padding: 5px;
     color: var(--light-grey-color);
     height: 300px;
-    resize: none;
+}
+.blog-post_textarea:focus,.blog-post_textarea:active  {
+    outline: none;
 }
 .btn-style-1 {
     display: grid;
@@ -252,8 +254,35 @@ textarea {
     font-weight: 500;
     cursor: pointer;
 }
+.btn-style-1:focus, .btn-style-a:active {
+    border: none;
+    outline: none;
+}
 .note {
     font-size: .8em;
+}
+/* RICH TEXT AREA */
+.rich-text-formatter {
+    display: inline-flex;
+    align-items: center;
+    height: 35px;
+    background: rgb(17, 17, 17);
+    width: 100%;
+    padding: 2px;
+}
+.rich-text-btns {
+    display: igrid;
+    align-content: center;
+    font-size: 1em;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 2px;
+    margin: 2px;
+    background: var(--main-hightlight-color)
+}
+.bold {
+    font-weight: bold;
 }
 /* Image Properties */
 .img-75 {
@@ -285,6 +314,7 @@ textarea {
 .account-main-nav {
     display: inline-flex;
     margin: 10px 0px;
+    width: 100%;
 }
 .account-navigation-column {
     display: grid;
@@ -301,3 +331,20 @@ textarea {
     display: inline-grid;
     height: 40px;
 }
+/* BLOG POSTS */
+.account-posts {
+    /* display: grid; */
+    display: none;
+    width: 60%;
+    background: rgba(15, 15, 15, .5);
+    padding: 10px;
+}
+.account-write-post {
+    display: none;
+}
+.blog-content {
+    display: grid;
+    margin-top: 20px;
+}
+
+

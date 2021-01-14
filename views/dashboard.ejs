@@ -12,42 +12,54 @@
                 <h3>Account Overview</h3>
                 <ul class="account-nav-ul">
                     <li class="account-main-nav">
-                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> <a href="" id="post_write">Write a Post</a> 
+                        <!-- <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> --> <a href="javascript:void(0)" id="account_overview">Account Overview</a> 
+                                          </li>
+                    <li class="account-main-nav">
+  <!-- <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> --> <a href="javascript:void(0)" id="post_write">Write a Post</a> 
                     </li>
                     <li class="account-main-nav">
-                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> <a href="" id="post_write">My Posts</a> 
+  <!-- <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> --> <a href="javascript:void(0)" id="my_posts">My Posts</a> 
                     </li>
                     <li class="account-main-nav">
-                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> <a href="">Inbox</a> 
+  <!-- <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> --> <a href="" >Inbox</a> 
                     </li>
                     <li class="account-main-nav">
-                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> <a href="">Watchlist</a> 
+  <!-- <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> --> <a href="">Watchlist</a> 
                     </li>
                     <li class="account-main-nav">
-                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> <a href="">Posts</a> 
+  <!-- <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> --> <a href="">Posts</a> 
                     </li>
                     <li class="account-main-nav">
-                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> <a href="">Uploads</a> 
+  <!-- <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> --> <a href="">Uploads</a> 
                     </li>
                     <li class="account-main-nav">
-                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> <a href="">My Favorites</a> 
+  <!-- <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> --> <a href="">My Favorites</a> 
                     </li>
                     <li class="account-main-nav">
-                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> <a href="">Orders</a> 
+  <!-- <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> --> <a href="">Orders</a> 
                     </li>
                     </ul>
                 </div>
             </div>
+            <!-- SECOND COLUMN -->
             <div class="account-main-area">
                 <!-- MAIN SECTION -->
+                <div class="account-overview">
                 <h4>Your Information</h4>
                 <p><b>Account Email: </b><%=email %></p>
                 <p><b>Account Title: </b><%=title %></p>
+            </div>
+
                 <!-- BLOG POST -->
                 <div class="account-write-post">
                     <form action="" method="POST" class="user-post-form" name="userPost" id="user-post">
                     <input type="text" name="title" placeholder="Post Title" id="title">
-                    <textarea name="post"  placeholder="Write here..." id = "post-body"></textarea>
+
+                    
+                    <div class='blog-post_textarea' contenteditable>
+                        Select some text and click the button to make it bold...
+                        <br>Or write your own text
+                      </div>
 
                     <input type="radio" id="privacy-level-3" name="privacy_level" value="3">
                     <label for="privacy-level-3" >Private</label><br>
@@ -64,12 +76,20 @@
                 </div>
                     <!-- MY POSTS -->
                     <div class="account-posts">
-                        
+                        <div class="blog-container">
+                            <ul>
+                                <li><h4>Some Title Here</h4></li>
+                                <li>UserName</li>
+                                <li>Date:</li>
+                            </ul>
+                            <div class="blog-content">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas officiis nesciunt, nulla laborum, minus delectus quae voluptate earum optio itaque provident magni labore tempora facere quibusdam sapiente pariatur esse sunt. Beatae, quidem aspernatur debitis unde magnam velit rerum autem deserunt ipsam culpa maxime dolorum? A rerum sunt deleniti. At alias quis tenetur culpa magni earum nisi labore nam perferendis? Doloribus veniam accusantium laboriosam veritatis ipsa. Architecto, sapiente iste. Inventore deserunt numquam dicta, dignissimos fuga in porro magni at dolorum aliquid consectetur temporibus autem pariatur voluptas laboriosam quaerat fugit sit reprehenderit, alias quasi molestiae quibusdam aspernatur! Officia sint suscipit iusto eos?
+                            </div>
+                        </div>
                     </div>
+                </div>
             </div>
-            </ul>
-        </div>
-    </div>
+        </div>  
     </main>
 
 <%- include('./partials/footer'); %>
