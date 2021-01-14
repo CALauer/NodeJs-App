@@ -1,0 +1,39 @@
+
+    <%- include('./partials/head'); %>
+
+    <header>
+        <%- include('./partials/nav'); %>
+    </header>
+    <main>
+    <div class="global-wrapper">
+        <div class="main-container two-columns-style-2">
+            <div>
+                <div class="account-navigation-column">
+                <h3>Account Overview</h3>
+                <ul class="account-nav-ul">
+                    <li class="account-main-nav">
+                        <a href="javascript:voide(0)">Add Member</a>
+                    </li>
+                    <li class="account-main-nav">
+                        <a href="javascript:voide(0)">Delete Member</a>
+                    </li>
+                    <li class="account-main-nav">
+                        <a href="javascript:voide(0)">Promote/Demote a Member</a>
+                    </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="account-main-area">
+                <h4>Your Information</h4>
+                <p><b>Account Email: </b><%=email %></p>
+                <p><b>Account Title: </b><%=title %></p>
+
+            </div>
+
+            </ul>
+        </div>
+    </div>
+    </main>
+
+<%- include('./partials/footer'); %>

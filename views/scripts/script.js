@@ -47,5 +47,22 @@ $('#myAccount-dropdown-link').click('click', function() {
         }
     });
 
-console.log("working")
-
+    $('#user-post').on('click', '#submit-post', function(event) {
+        event.preventDefault();
+        const title = $('#title').val();
+        const post = $('#post-body').val();
+        const privacy = $('input[name=privacy_level]:checked', '#user-post').val()
+        console.log(privacy)
+console.log(title)
+        $.ajax({
+            url: '/post-user-blog',
+            method: 'POST',
+            data: { title: title, post: post, privacy_level: privacy }
+            }).done(function(res) {
+                if (res.success) {
+                alert("Your post was successfully submitted.")
+            } else {
+                console.log('error...ajax');
+                }
+            })
+    });

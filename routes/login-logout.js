@@ -9,7 +9,6 @@ router.get('/login-logout', function(req, res, next) {
     req.session.loggedinUser = false
     res.redirect('/')
     console.log(req.session)
-    console.log(req.session.email)
 }else{
   res.render('login-form');
 }
@@ -29,6 +28,8 @@ router.post('/login', async function(req, res){
             if(comparision){
                 req.session.loggedinUser= true;
                 req.session.email = email;
+                req.session.title = results[0].title;
+                req.session.userId = results[0].id;
                 res.redirect('/dashboard')
             }
             else{

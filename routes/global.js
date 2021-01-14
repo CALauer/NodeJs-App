@@ -7,6 +7,9 @@ router.get('/', function(req, res) {
 router.get('/updates', function(req, res) {
         res.render('updates');
 });
+router.get('/stocks', function(req, res) {
+        res.render('stocks');
+});
 
 
 // Logged in variables

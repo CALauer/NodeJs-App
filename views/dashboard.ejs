@@ -12,6 +12,12 @@
                 <h3>Account Overview</h3>
                 <ul class="account-nav-ul">
                     <li class="account-main-nav">
+                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> <a href="" id="post_write">Write a Post</a> 
+                    </li>
+                    <li class="account-main-nav">
+                        <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> <a href="" id="post_write">My Posts</a> 
+                    </li>
+                    <li class="account-main-nav">
                         <img src="./images/SVG/inbox.svg" alt="inbox" class="account-icon"> <a href="">Inbox</a> 
                     </li>
                     <li class="account-main-nav">
@@ -33,11 +39,34 @@
                 </div>
             </div>
             <div class="account-main-area">
+                <!-- MAIN SECTION -->
                 <h4>Your Information</h4>
                 <p><b>Account Email: </b><%=email %></p>
+                <p><b>Account Title: </b><%=title %></p>
+                <!-- BLOG POST -->
+                <div class="account-write-post">
+                    <form action="" method="POST" class="user-post-form" name="userPost" id="user-post">
+                    <input type="text" name="title" placeholder="Post Title" id="title">
+                    <textarea name="post"  placeholder="Write here..." id = "post-body"></textarea>
 
+                    <input type="radio" id="privacy-level-3" name="privacy_level" value="3">
+                    <label for="privacy-level-3" >Private</label><br>
+
+                    <input type="radio" id="privacy-level-2" name="privacy_level" value="2">
+                    <label for="privacy-level-2">Friends Only</label><br>
+
+                    <input type="radio" id="privacy-level-1" name="privacy_level" value="1">
+                    <label for="privacy-level-1">Public</label><br>
+
+                    <span class="note">Posts marked for "Everyone" are subject to our terms of services. Please read our Terms of Service for more information. </span>
+                    <button type="submit" class="btn-style-1" id="submit-post">Submit Post</button>
+                    </form>
+                </div>
+                    <!-- MY POSTS -->
+                    <div class="account-posts">
+                        
+                    </div>
             </div>
-
             </ul>
         </div>
     </div>

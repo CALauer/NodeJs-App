@@ -10,7 +10,9 @@ var PORT = process.env.PORT || 5000;
 const loginRouter = require('./routes/login-logout');
 const registrationRouter = require('./routes/registration');
 const dashboardRouter = require('./routes/dashboard');
-const globalRouter = require('./routes/global.js');
+const globalRouter = require('./routes/global');
+const stocksRouter = require('./routes/stocks');
+const userposts = require('./controllers/userposts');
 const { response } = require('express');
 
 app.set('view engine','ejs');
@@ -26,6 +28,8 @@ app.use(session({
   }))
   app.use(function (req, res, next) {
     res.locals.currentUser = req.session.loggedinUser;
+    res.locals.userTitle = req.session.title;
+    res.locals.userId = req.session.userId;
     next();
 });
 app.use('/', function(req, res, next) {
@@ -45,6 +49,8 @@ app.use('/', registrationRouter);
 app.use('/', dashboardRouter);
 app.use('/', loginRouter);
 app.use('/', globalRouter);
+app.use('/', stocksRouter);
+app.use('/', userposts);
 
 // 
 
