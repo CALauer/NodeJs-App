@@ -69,7 +69,6 @@ console.log(title)
                 }
             })
     });
-// RICH TEXT FORMATTER
 $('a').on('click', function() {
     var accountOverview =  $('.account-overview')
     var accountWritePost = $('.account-write-post')
