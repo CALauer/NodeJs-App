@@ -4,6 +4,7 @@ const express = require('express')
 const session = require('express-session')
 const router = express.Router()
 const bodyParser=require('body-parser');
+const db = require('./database')
 const app = express()
 var PORT = process.env.PORT || 5000;
 // My Defined Routes
@@ -12,8 +13,9 @@ const registrationRouter = require('./routes/registration');
 const dashboardRouter = require('./routes/dashboard');
 const globalRouter = require('./routes/global');
 const stocksRouter = require('./routes/stocks');
-// const userposts = require('./controllers/userposts');
 const { response } = require('express');
+// NEW 
+
 
 app.set('view engine','ejs');
 app.use(express.static('views'))
@@ -24,8 +26,14 @@ app.use(session({
     resave: false,
     keys: ['key1', 'key2'],
     saveUninitialized: true,
-    cookie: { maxAge: 60000 * 60 }
+    cookie: { maxAge: 60000 * 60 },
+    store: sessionStore
   }))
+
+var MySQLStore = require('express-mysql-session')(session);
+var sessionStore = new MySQLStore(db);
+
+
   app.use(function (req, res, next) {
     res.locals.currentUser = req.session.loggedinUser;
     res.locals.userTitle = req.session.title;
