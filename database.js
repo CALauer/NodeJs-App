@@ -8,6 +8,4 @@ var connection = mysql.createPool({
     database : process.env.DB_NAME // MYSQL DB NAME
 })
 
-
-
 module.exports = connection;

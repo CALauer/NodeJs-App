@@ -24,6 +24,7 @@ var options = {
 	password: process.env.DB_PASS,
 	database: process.env.DB_NAME
 };
+
 var sessionStore = new MySQLStore(options);
 
 app.set('view engine','ejs');

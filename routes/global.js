@@ -10,6 +10,9 @@ router.get('/updates', function(req, res) {
 router.get('/stocks', function(req, res) {
         res.render('stocks');
 });
+router.get('/feed', function(req, res) {
+        res.render('feed');
+});
 
 
 // Logged in variables

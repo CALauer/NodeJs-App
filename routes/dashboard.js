@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../database');
+const posts = require('../controllers/posts');
+
 /* GET users listing. */
 router.get('/dashboard', function(req, res, next) {
     if(req.session.loggedinUser == true){
@@ -44,17 +46,20 @@ router.post('/post-user-blog', function(req, res, next) {
             })
         }
     })
-router.post('/my-blog-posts', function(req, res, next) {   
-        userID = req.session.userId
-        console.log(userID)
-        db.query('SELECT * FROM posts WHERE userId = ?', userID, function (error, results, fields) {
-            var data = [];
-            for (var i = 0;i < results.length; i++) {
-                data.push({title: results[i].title, date: results[i].date, post: results[i].post});
-            }
-            res.send({ success: true, data})
-            res.end(JSON.stringify(data));
-            console.log(data)
-    })
-})
+router.post('/my-blog-posts', posts.getUserPosts) 
+
+
+        // userID = req.session.userId
+        // console.log(userID)
+        // // posts.getPublicPosts()
+        // db.query('SELECT * FROM posts WHERE userId = ?', userID, function (error, results, fields) {
+        //     var data = [];
+        //     for (var i = 0;i < results.length; i++) {
+        //         data.push({title: results[i].title, date: results[i].date, post: results[i].post});
+        //     }
+//             res.send({ success: true, getUserPosts()})
+//             res.end(JSON.stringify(data));
+//             console.log(data)
+//     })
+// })
 module.exports = router;
