@@ -15,7 +15,16 @@ const globalRouter = require('./routes/global');
 const stocksRouter = require('./routes/stocks');
 const { response } = require('express');
 // NEW 
+var MySQLStore = require('express-mysql-session')(session);
 
+var options = {
+	host: process.env.DB_HOST,
+	port: 3306,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASS,
+	database: process.env.DB_NAME
+};
+var sessionStore = new MySQLStore(options);
 
 app.set('view engine','ejs');
 app.use(express.static('views'))
@@ -30,8 +39,7 @@ app.use(session({
     store: sessionStore
   }))
 
-var MySQLStore = require('express-mysql-session')(session);
-var sessionStore = new MySQLStore(db);
+
 
 
   app.use(function (req, res, next) {
