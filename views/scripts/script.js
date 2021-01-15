@@ -80,9 +80,30 @@ $('a').on('click', function() {
         accountPosts.css("display", "none")
         accountOverview.css("display", "none")
     } else if (this.id == "my_posts") {
-        accountPosts.fadeIn().css("display", "grid")
-        accountWritePost.css("display", "none")
-        accountOverview.css("display", "none")
+       
+        $.ajax({
+            url: '/my-blog-posts',
+            method: 'POST',
+            }).done(function(res) {
+                if (res.success) {
+                    data = res.data;
+                    console.log(res.data[0]);
+                    console.log(data.length);
+                    myContent = document.getElementById('my_blog_posts');
+                    myContent.innerHTML = "";
+
+                for (var i = 0; i < data.length; i++) {
+                    myContent.innerHTML += '<div class="blog-content">' + '<ul><li><h4>' + data[i].title + '</h4></li><li>UserName</li><li>Date: ' + data[i].date + '</li></ul><div class="blog-body">' + data[i].post + '</div></div></div>';
+                       
+                } 
+                
+                accountPosts.fadeIn().css("display", "grid")
+                accountWritePost.css("display", "none")
+                accountOverview.css("display", "none")
+            } else {
+                myContent.innerHTML = '<div class="blog-content">You have no posts yet....post something.</p>'
+                }
+            })
     }
     else if (this.id == "account_overview") {
         accountOverview.fadeIn().css("display", "grid")

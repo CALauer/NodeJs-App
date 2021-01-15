@@ -336,15 +336,22 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus,input[typ
     /* display: grid; */
     display: none;
     width: 60%;
-    background: rgba(15, 15, 15, .5);
     padding: 10px;
+    margin-bottom: 20px;
+
 }
 .account-write-post {
     display: none;
 }
 .blog-content {
     display: grid;
-    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(15, 15, 15, .5);
+}
+.blog-body {
+    display: grid;
+    margin-top: 10px;
 }
 
 

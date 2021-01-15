@@ -12,7 +12,7 @@ const registrationRouter = require('./routes/registration');
 const dashboardRouter = require('./routes/dashboard');
 const globalRouter = require('./routes/global');
 const stocksRouter = require('./routes/stocks');
-const userposts = require('./controllers/userposts');
+// const userposts = require('./controllers/userposts');
 const { response } = require('express');
 
 app.set('view engine','ejs');
@@ -50,7 +50,7 @@ app.use('/', dashboardRouter);
 app.use('/', loginRouter);
 app.use('/', globalRouter);
 app.use('/', stocksRouter);
-app.use('/', userposts);
+// app.use('/', userposts);
 
 // 
 

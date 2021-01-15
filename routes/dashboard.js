@@ -44,21 +44,17 @@ router.post('/post-user-blog', function(req, res, next) {
             })
         }
     })
-    router.post('/my-blog-posts', function(req, res, next) {   
+router.post('/my-blog-posts', function(req, res, next) {   
         userID = req.session.userId
-
-        console.log(postData)
-        if(postTitle != "" && userID != "" && postBody != "") {
-            db.query('INSERT INTO posts SET ?', postData, function (error, results, fields) {
-                if (error) {
-                  res.send({
-                    "code":400,
-                    "failed": "An error ocurred"
-                  })
-                } else {
-                  res.json({ success: true })
-                  }
-                })
+        console.log(userID)
+        db.query('SELECT * FROM posts WHERE userId = ?', userID, function (error, results, fields) {
+            var data = [];
+            for (var i = 0;i < results.length; i++) {
+                data.push({title: results[i].title, date: results[i].date, post: results[i].post});
             }
-        })
+            res.send({ success: true, data})
+            res.end(JSON.stringify(data));
+            console.log(data)
+    })
+})
 module.exports = router;
