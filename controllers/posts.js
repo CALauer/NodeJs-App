@@ -26,7 +26,7 @@ let privacy_level = 1;
 exports.getPublicPosts = getPublicPosts
 
 function getUserPosts(req, res) {
-        userID = req.session.userId
+        userID = req.session.userInfo.userId
         console.log(userID)
         // posts.getPublicPosts()
         db.query('SELECT * FROM posts WHERE userId = ?', userID, function (error, results, fields) {

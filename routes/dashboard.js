@@ -22,7 +22,7 @@ router.get('/admin', function(req, res, next) {
     }
 });
 router.post('/post-user-blog', function(req, res, next) {   
-    userID = req.session.userId
+    userID = req.session.userInfo.userId
     postTitle = req.body.title
     postBody = req.body.post
     postPrivacy = req.body.privacy_level 

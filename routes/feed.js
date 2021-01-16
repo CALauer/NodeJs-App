@@ -5,7 +5,7 @@ const posts = require('../controllers/posts');
 
 /* GET users listing. */
 router.get('/feed', function(req, res, next) {
-    if(req.session.loggedinUser == true){
+    if(req.session.userInfo.loggedIn == true){
         res.render('feed')
         // console.log(req.session.title)
     }else{
