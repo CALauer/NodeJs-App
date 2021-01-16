@@ -10,34 +10,105 @@ router.get('/register', function(req, res, next) {
 });
 
 // to store user input detail on post request
-router.post('/register', async function(req,res){
-    const password = req.body.password;
-    const confirmed = req.body.confirm_password
-    if (password == confirmed) {
+router.post('/register', function(req,res){
+  // console.log(req.body + "This is the body")
 
-    const encryptedPassword = await bcrypt.hash(password, 8)
-    var users={
-       "email":req.body.email,
-       "password":encryptedPassword
-     }
+  if(req.body) {
+    // Assign Variables from AJAX post
+    const username = req.body.username
+    const password = req.body.password
+    const cPassword = req.body.confirmedPassword
+    const email = req.body.email
+   
 
-    db.query('INSERT INTO users SET ?',users, function (error, results, fields) {
+    // Check for similar username/email
+    db.query('SELECT * FROM users WHERE email = ?',email, function (error, results, fields) {
       if (error) {
         res.send({
           "code":400,
           "failed":"error ocurred"
         })
       } else {
-        var msg ="You have successfully registered";
-        res.render('registration-form',{alertMsg:msg});
+        if(results.length > 0) {
+          res.send({failed: "Existing Email Account"})
+          console.log("Existing Email Account")
+        } else {
+          db.query('SELECT * FROM users WHERE username = ?',username, function (error, results, fields) {   
+            if(results.length > 0) {
+              res.send({failed: "Existing Username"})
+              console.log("Existing  Username")
+            } else {            
+              if(inputData(username, email, password)) {
+              res.send({success: true})
+              } else {
+                res.send({failed: "Something went wong."})
+              }
+          }
+          })
         }
-    });
-    }else {
-        var msg ="Passwords do not match";
-        res.render('registration-form',{alertMsg:msg});    
+      }
+    })
+  }
+})
 
+async function inputData(username, email, password) {
+  const encryptedPassword = await bcrypt.hash(password, 8)
+  var users={
+    "username": username,
+    "email":email,
+    "password":encryptedPassword
+  }
+  db.query('INSERT INTO users SET ?',users,  function (error, results, fields) {
+      if (error) {
+        return false; 
+        } else {
+        return true;
+      }
+})
 }
-  })
+
+
+
+
+  //   const encryptedPassword = await bcrypt.hash(password, 8)
+  //   // console.log(body)
+  //   res.send({success: true})
+
+  // } else {
+  //   res.send({success: false})
+  // }
+
+
+
+
+
+
+//     const password = req.body.password;
+//     const confirmed = req.body.confirm_password
+//     if (password == confirmed) {
+
+//     const encryptedPassword = await bcrypt.hash(password, 8)
+//     var users={
+//        "email":req.body.email,
+//        "password":encryptedPassword
+//      }
+
+//     db.query('INSERT INTO users SET ?',users, function (error, results, fields) {
+//       if (error) {
+//         res.send({
+//           "code":400,
+//           "failed":"error ocurred"
+//         })
+//       } else {
+//         var msg ="You have successfully registered";
+//         res.render('registration-form',{alertMsg:msg});
+//         }
+//     });
+//     }else {
+//         var msg ="Passwords do not match";
+//         res.render('registration-form',{alertMsg:msg});    
+
+// }
 
 
 

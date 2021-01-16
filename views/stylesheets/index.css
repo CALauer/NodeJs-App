@@ -211,28 +211,27 @@ input[type="text"], input[type="password"], input[type="email"] {
 	padding: 5px;
 	color: var(--light-grey-color);
 }
-textarea:focus, input[type="text"]:focus, input[type="password"]:focus,input[type="email"]:focus, input[type="tel"]:focus  {
+.post-input-area:focus, input[type="text"]:focus, input[type="password"]:focus,input[type="email"]:focus, input[type="tel"]:focus  {
 	border: solid .5px var(--orange-color);
 	outline: none;
 }
 .user-post-form {
     width: 60%;
 }
-textarea {
+.post-input-area {
     border: none;
 	width: 100%;
 	margin: 10px 0px;
 	border-radius: 2px;
 	border: none;
-	background:rgb(14, 7, 0);;
+	background:rgb(14, 7, 0);
 	font-size: inherit;
     padding: 5px;
     color: var(--light-grey-color);
     height: 300px;
+    resize: none;
 }
-.blog-post_textarea:focus,.blog-post_textarea:active  {
-    outline: none;
-}
+
 .btn-style-1 {
     display: grid;
     align-content: center;
@@ -318,7 +317,6 @@ textarea {
     /* display: grid; */
     display: none;
     width: 60%;
-    padding: 10px;
     margin-bottom: 20px;
 
 }
@@ -328,12 +326,12 @@ textarea {
 .blog-content {
     display: grid;
     margin-bottom: 20px;
-    padding: 10px;
     background: rgba(15, 15, 15, .5);
+    padding: 10px;
 }
 .blog-body {
     display: grid;
-    margin-top: 10px;
+    padding: 10px;
 }
 
 

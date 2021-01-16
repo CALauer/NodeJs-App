@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var publicPosts = require('../controllers/posts')
 router.get('/', function(req, res) {
         res.render('index');
 });
@@ -10,9 +10,8 @@ router.get('/updates', function(req, res) {
 router.get('/stocks', function(req, res) {
         res.render('stocks');
 });
-router.get('/feed', function(req, res) {
-        res.render('feed');
-});
+
+// router.post('/feed', publicPosts.getPublicPosts) 
 
 
 // Logged in variables

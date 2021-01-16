@@ -5,15 +5,16 @@
     <main>
         <div class="global-wrapper">  
             <div class="main-container">
-                <div class="center-form-wrapper">
-                <img src="./images/viabull-lndg@2x.png" alt="logo" class="registration-logo"/>
-<p> <%=(typeof alertMsg!='undefined')? alertMsg:''%></p>
-<form method="post" action="register" class="form-style-1">
-  <input type="email" placeholder="Email Address" name="email" required>
-  <input type="password" placeholder="Password" name="password">
-  <input type="password" placeholder="Confirm Password" name="confirm_password" >
-  <button type="submit" class="btn-style-1">Register Now</button>
-  <a href="/login-logout">Login</a>
+        <div class="center-form-wrapper">
+        <img src="./images/viabull-lndg@2x.png" alt="logo" class="registration-logo"/>
+        <p id="alertMsg"></p>
+        <form action="" method="POST" class="form-style-1">
+        <input type="text" placeholder="Username"  id="username" required>
+        <input type="email" placeholder="Email Address" id="email" required>
+        <input type="password" placeholder="Password" id="password" required>
+        <input type="password" placeholder="Confirm Password" id="confirm_password" required>
+        <button type="button" onclick="registerUser()" class="btn-style-1" id="register-btn">Register Now</button>
+        <a href="/login-logout">Login</a>
 
      </div>
   </div>

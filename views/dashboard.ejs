@@ -28,8 +28,14 @@
                 <!-- MAIN SECTION -->
                 <div class="account-overview">
                 <h4>Your Information</h4>
+                <p><b>Account Id: </b><%=email %></p>
                 <p><b>Account Email: </b><%=email %></p>
                 <p><b>Account Title: </b><%=title %></p>
+                <p><b>Username: </b><%=email %></p>
+                <p><b>First Name: </b><%=title %></p>
+                <p><b>Lastname: </b><%=email %></p>
+                <p><b>Lastname: </b><%=email %></p>
+
             </div>
 
                 <!-- BLOG POST -->
@@ -38,8 +44,8 @@
                     <input type="text" name="title" placeholder="Post Title" id="title">
 
                     
-                    <textarea name="post" name="post" placeholder="Got something to say?" id="post-body">
-                    </textarea>
+                    <div class="post-input-area" id="post-body" contenteditable>
+                    </div>
 
                     <input type="radio" id="privacy-level-3" name="privacy_level" value="3">
                     <label for="privacy-level-3" >Private</label><br>
@@ -51,7 +57,7 @@
                     <label for="privacy-level-1">Public</label><br>
 
                     <span class="note">Posts marked for "Everyone" are subject to our terms of services. Please read our Terms of Service for more information. </span>
-                    <button type="submit" class="btn-style-1" id="submit-post">Submit Post</button>
+                    <button type="submit" class="btn-style-1" id="submit-post" >Submit Post</button>
                     </form>
                 </div>
                     <!-- MY POSTS -->

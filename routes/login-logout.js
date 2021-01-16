@@ -1,18 +1,22 @@
-var express = require('express');
+let express = require('express');
 var MySQLStore = require('express-mysql-session');
 var router = express.Router();
 var db = require('../database');
 var bcrypt = require('bcryptjs');
 /* GET users listing. */
-router.get('/login-logout', function(req, res, next) {
-  if(req.session.loggedinUser == true){
-    req.session.loggedinUser = false
+router.get('/logout', function(req, res, next) {
+  if(req.session.userInfo.loggedIn == true){
+    req.session.userInfo.loggedIn = false
+    req.sessionStore.options.userCount -= 1
+    req.session.destroy()
     res.redirect('/')
     console.log(req.session)
 }else{
-  res.render('login-form');
+  res.redirect('/');
 }
-  
+})
+router.get('/login', function(req, res, next) {
+  res.render('login-form')
 });
 router.post('/login', async function(req, res){
     var email = req.body.email_address;
@@ -26,10 +30,14 @@ router.post('/login', async function(req, res){
           if(results.length > 0){
             const comparision = await bcrypt.compare(password, results[0].password)
             if(comparision){
-                req.session.loggedinUser= true;
-                req.session.email = email;
-                req.session.title = results[0].title;
-                req.session.userId = results[0].id;
+                
+                req.session.userInfo = {
+                  loggedIn: true,
+                  email: email,
+                  userId: results[0].id,
+                  userPerm: results[0].title
+                }
+
                 res.redirect('/dashboard')
             }
             else{

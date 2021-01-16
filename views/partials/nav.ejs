@@ -21,7 +21,7 @@
           <a class="desktop-nav-link" href="/updates">Project Info</a>
         </li>
         <li class="desktop-navigation-nav-list">
-          <a class="desktop-nav-link" href="/feed">Public Posts</a>
+          <a class="desktop-nav-link" id="feed" href="/feed">Public Posts</a>
         </li>
         <!-- <li class="desktop-navigation-nav-list">
           <a class="desktop-nav-link" href="/stocks">Stocks</a>
@@ -75,7 +75,7 @@
             <a class="desktop-nav-link" href="/updates">Project Info</a>
           </li>
           <li class="desktop-navigation-nav-list">
-            <a class="desktop-nav-link" href="/feed">Public Posts</a>
+            <a class="desktop-nav-link" id="feed" href="/feed">Public Posts</a>
           </li>
         </ul>
     </div>
@@ -90,7 +90,7 @@
     </div>
     </nav>
       <div class="account-drop-down-menu" id="account-drop-down-menu">
-        <a href="/login-logout" class="to-login-page-btn">
+        <a href="/logout" class="to-login-page-btn">
           <%= menuBtn %>
         </a>
         <a href="/dashboard" class="account-drop-down-menu-links">My Account</a>
@@ -122,20 +122,18 @@
               <li class="desktop-navigation-nav-list">
                 <a class="desktop-nav-link" href="/updates">Project Info</a>
               </li>
-              <li class="desktop-navigation-nav-list">
-                <a class="desktop-nav-link" href="/feed">Public Posts</a>
-              </li>
+
             </ul>
         </div>
          <div class="justify-self-right">
           <ul class="desktop-navigation-unordered">
             <li class="desktop-navigation-nav-list">
-              <a href="/login-logout" class="to-login-page-btn">
+              <a href="/login" class="to-login-page-btn">
                 <%= menuBtn %>
               </a>
             </li>
             <li class="desktop-navigation-nav-list">
-              <a href="/register" class="account-drop-down-menu-links"><%= test %></a>
+              <a href="/register" class="account-drop-down-menu-links">Create a free account</a>
             </li>
           </ul>
          </div>
