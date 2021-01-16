@@ -54,33 +54,34 @@ app.use(session({
 
 
   app.use(function (req, res, next) {
- console.log(req.session)
 
     if(req.session.userInfo == undefined) {
-      console.log(req.session.userInfo)
+      // userInfo = {
+      //   loggedIn: false,
+      //   email: "",
+      //   userId: 0,
+      //   userPerm: "none",
+      //   username: "public_user"
+      // }
+      // req.session.userInfo = 
       app.locals.currentUser = false
       app.locals.userTitle = ""
       app.locals.menuBtn = "Login"
       app.locals.test = "Create Free Account"
-
-
-    } else {
-    app.locals.currentUser = req.session.userInfo.loggedIn
-    app.locals.userTitle = req.session.userInfo.userPerm
-    app.locals.userId = req.session.userInfo.userId
-    app.locals.email = req.session.userInfo.email
-    app.locals.menuBtn = "Logout"
+    } else if (req.session.userInfo.loggedIn == true) {
+      app.locals.currentUser = req.session.userInfo.loggedIn
+      app.locals.userTitle = req.session.userInfo.userPerm
+      app.locals.userId = req.session.userInfo.userId
+      app.locals.email = req.session.userInfo.email
+      app.locals.username = req.session.userInfo.username
+      app.locals.menuBtn = "Logout"
+  } else {
+      app.locals.currentUser = false
+      app.locals.userTitle = ""
+      app.locals.menuBtn = "Login"
+      app.locals.test = "Create Free Account"
   }
-
-      // req.session.userInfo = userInfo;
-      // res.locals.currentUser = true;
-    // req.session.userInfo.loggedIn;
-  //   res.locals.userId = req.session.userInfo.userId;
-  //   res.locals.userCount = req.sessionStore.options.userCount;
-  //   console.log(req.sessionStore.options.userCount)
-  console.log(req.session)
   next()
-
     })
 
   // }

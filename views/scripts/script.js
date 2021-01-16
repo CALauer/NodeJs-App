@@ -60,7 +60,10 @@ if(window.location.pathname == "/feed") {
 
 
 });    
-
+var accountOverview =  $('.account-overview')
+var accountWritePost = $('.account-write-post')
+var accountPosts = $('.account-posts')
+ 
 $('#myAccount-dropdown-link').click('click', function() {
     let x = $('.account-drop-down-menu');
     if (x.data('clicked', true) ) {
@@ -75,10 +78,11 @@ $('#myAccount-dropdown-link').click('click', function() {
         let day = dateObj.getUTCDate();
         let year = dateObj.getUTCFullYear();
         let hour = dateObj.getHours();
-        let minutes = dateObj.getMinutes();
+        minutes = dateObj.getMinutes()
+        minutes = checkTime(minutes)
         event.preventDefault();
         let title = $('#title').val();
-        let postDate = year + "/" + month + "/" + day + "|" + hour + ":" + minutes;
+        let postDate = year + "/" + month + "/" + day + " " + hour + ":" + minutes;
 
         console.log(postDate)
         let post = $('#post-body').html();
@@ -89,55 +93,18 @@ $('#myAccount-dropdown-link').click('click', function() {
             data: { title: title, post: post, privacy_level: privacy, date: postDate }
             }).done(function(res) {
                 if (res.success) {
-                alert("Your post was successfully submitted.")
-            } else {
-                console.log('error...ajax');
+                    displayUserPost()
                 }
-            })
+
     });
-$('a').on('click', function() {
-    var accountOverview =  $('.account-overview')
-    var accountWritePost = $('.account-write-post')
-    var accountPosts = $('.account-posts')
-    if(this.id == "post_write") {
-        accountWritePost.fadeIn().css("display", "grid")
-        accountPosts.css("display", "none")
-        accountOverview.css("display", "none")
-    } else if (this.id == "my_posts") {
-       
-        $.ajax({
-            url: '/my-blog-posts',
-            method: 'POST',
-            }).done(function(res) {
-                if (res.success) {
-                    data = res.data;
-                    myContent = document.getElementById('my_blog_posts');
-                    myContent.innerHTML = "";
+})
 
-                for (var i = 0; i < data.length; i++) {
-                    myContent.innerHTML += '<div class="blog-content">' + '<ul><li><h4>' + data[i].title + '</h4></li><li>UserName</li><li>Date: ' + data[i].date + '</li></ul><div class="blog-body">' + data[i].post + '</div></div></div>';
-                       
-                } 
-                
-                accountPosts.fadeIn().css("display", "grid")
-                accountWritePost.css("display", "none")
-                accountOverview.css("display", "none")
-            } else {
-                myContent.innerHTML = '<div class="blog-content">You have no posts yet....post something.</p>'
-                }
-            })
+function checkTime(i) {
+    if (i < 10) {
+        i = "0" + i;
     }
-    else if (this.id == "account_overview") {
-        accountOverview.fadeIn().css("display", "grid")
-        accountWritePost.css("display", "none")
-        accountPosts.css("display", "none")
-    }
-    else if(this.id == "feed") {
-
-        } 
-        else {
-        }
-    }) 
+    return i;
+}
 function ValidateEmail(mail) 
 {
  if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail))
@@ -146,7 +113,6 @@ function ValidateEmail(mail)
   }
     return (false)
 }
-
 function registerUser() { 
     let userName = $('#username').val();
     let userEmail = $('#email').val();
@@ -195,6 +161,41 @@ console.log(userRegData)
             }
         })
     }
+}
+function dashboardLinkHandle(id) {
+    let linkId = id
+    if(linkId == "post_write") {
+        accountWritePost.fadeIn().css("display", "grid")
+        accountPosts.css("display", "none")
+        accountOverview.css("display", "none")
+    } else if(linkId == "my_posts") {
+        displayUserPost()
+    } else if(linkId == "account_overview") {
+        accountOverview.fadeIn().css("display", "grid")
+        accountWritePost.css("display", "none")
+        accountPosts.css("display", "none")
+    }
+}
+function displayUserPost() {
+    $.ajax({
+        url: '/my-blog-posts',
+        method: 'POST',
+        }).done(function(res) {
+            if (res.success) {
+                data = res.data;
+                myContent = document.getElementById('my_blog_posts');
+                myContent.innerHTML = "";
+            for (var i = 0; i < data.length; i++) {
+                myContent.innerHTML += '<div class="blog-content">' + '<ul><li><h4>' + data[i].title + '</h4></li><li class="username"><a href="" id="'+ data[i].blogId +'">' + data[i].username + '</a></li><li class="date">' + data[i].date + '</li></ul><div class="blog-body">' + data[i].post + '</div><div id="'+ data[i].blogId +'" class="blog_actions">' +
+                '<ul class="blog_action_buttons_ul"><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Edit</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Remove</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Like</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Dislike</a></li></ul>'
+            } 
+            accountPosts.fadeIn().css("display", "grid")
+            accountWritePost.css("display", "none")
+            accountOverview.css("display", "none")
+        } else {
+            myContent.innerHTML = '<div class="blog-content">You have no posts yet....post something.</p>'
+            }
+        })
 }
 
 

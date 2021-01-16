@@ -333,5 +333,46 @@ input[type="text"], input[type="password"], input[type="email"] {
     display: grid;
     padding: 10px;
 }
+/* POP UP */
 
-
+.pop_up {
+    display: grid;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    top: 200px;
+    left: 0;
+    right: 0;
+    width: 600px;
+    height: 400px;
+    background: grey;
+    box-shadow: 0px 4px 4px black;
+    color: black;
+    padding: 10px;
+}
+/*  BLOG */
+.blog_actions {
+    display: grid;
+    justify-self: center;
+    justify-content: center;
+    align-content: center;
+    height: 30px;
+    width: 100%;
+}
+.blog_action_buttons_ul {
+    display: flex;
+}
+.blog_action_buttons_li {
+    display: inline-flex;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.date {
+    font-size: .9em;
+    font-style: italic;
+    color: rgb(77, 77, 77)
+}
+.username {
+    font-size: .9em;
+    color: var(--main-link-color);
+}

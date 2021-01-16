@@ -8,8 +8,12 @@ router.get('/dashboard', function(req, res, next) {
     if(req.session.userInfo == undefined){
         res.redirect('/');
     }else{
+        email = req.session.userInfo.email
+        title = req.session.userInfo.userPerm
+        userName = req.session.userInfo.username
+        userId =req.session.userInfo.userId
         console.log(req.session.userInfo.email)
-        res.render('dashboard',{email:req.session.userInfo.email, title:req.session.userInfo.userPem})
+        res.render('dashboard',{email, title, userName, userId})
 
     }
 });
@@ -27,6 +31,7 @@ router.post('/post-user-blog', function(req, res, next) {
     postBody = req.body.post
     postPrivacy = req.body.privacy_level 
     postDate = req.body.date
+    username = req.session.userInfo.username
     console.log(req.body)
 
     postData = {
@@ -34,7 +39,8 @@ router.post('/post-user-blog', function(req, res, next) {
         "userId": userID,
         "post": postBody,
         "privacy_level":  postPrivacy,
-        "date": postDate
+        "date": postDate,
+        "username": username
     }
     console.log(postData)
     if(postTitle != "" && userID != "" && postBody != "") {
@@ -49,7 +55,7 @@ router.post('/post-user-blog', function(req, res, next) {
               }
             })
         }
-    })
+    })  
 router.post('/my-blog-posts', posts.getUserPosts) 
 
 

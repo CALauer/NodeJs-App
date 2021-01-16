@@ -35,7 +35,8 @@ router.post('/login', async function(req, res){
                   loggedIn: true,
                   email: email,
                   userId: results[0].id,
-                  userPerm: results[0].title
+                  userPerm: results[0].title,
+                  username: results[0].username
                 }
 
                 res.redirect('/dashboard')
