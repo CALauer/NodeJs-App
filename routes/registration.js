@@ -31,12 +31,10 @@ router.post('/register', function(req,res){
       } else {
         if(results.length > 0) {
           res.send({failed: "Existing Email Account"})
-          console.log("Existing Email Account")
         } else {
           db.query('SELECT * FROM users WHERE username = ?',username, function (error, results, fields) {   
             if(results.length > 0) {
               res.send({failed: "Existing Username"})
-              console.log("Existing  Username")
             } else {            
               if(inputData(username, email, password)) {
               res.send({success: true})
