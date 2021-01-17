@@ -12,7 +12,6 @@ function checkAuth(req, res, next){
 }
 function checkAdmin(req, res, next){
     if(title == "Admin" && status == true) {
-        console.log(title)
     } else {
         res.redirect('/dashboard')
     }

@@ -191,6 +191,8 @@ function displayUserPost() {
             accountOverview.css("display", "none")
         } else {
             alertMsg = res.failed
+            console.log(res.failed)
+            alertBox.html(alertMsg).fadeIn().fadeOut(2000)
             myContent.innerHTML = '<div class="blog-content">You have no posts yet....post something.</p>'
             }
         })
@@ -228,14 +230,27 @@ function renderUserManager() {
             "<div>Are you sure you want to delete: <span class='orange'>"+ userName +"</div>" +
             "<div><button class='confirm-delete' id='confirm-delete' onclick='deleteUser(\""+userName+"\")'>Delete User</button><button  type='button' id='cancel-delete' class='cancel-delete' onclick='cancelAction()'>Cancel</button></div>"
             );
-
         alertBox.fadeIn();
     });
   
-function deleteUser(x) {
-    console.log(x)
+function deleteUser(username) {
+    console.log(username)
+    $.ajax({
+        url: '/admin/deleteuser/'+username,
+        method: 'POST',
+        }).done(function(res) {
+            if (res.success) {
+                alertBox.html(username + "User has been deleted")
+                setTimeout(function() {
+                    alertBox.fadeOut()
+                }, 1500)
+            }
+        })
+
+    return
 }
 function cancelAction() {
+    setInterval(alertBox.fadeOut(), 2000)
     console.log("cancelled")
 }
 

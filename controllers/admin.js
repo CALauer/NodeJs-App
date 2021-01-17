@@ -16,8 +16,8 @@ function promoteUser() {
 }
 function deleteUser(req, res, next) {
     console.log(req.params)
-    response = "User has been deleted"
-    return response
+    console.log("Attempting to delete user")
+    res.send({success: true})
     next()
 }
 

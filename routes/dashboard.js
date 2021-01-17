@@ -23,8 +23,7 @@ router.get('/admin', auth.checkAuth, function(req, res, next) {
         res.redirect('/');
     }
 });
-router.get('/admin/deleteuser/:userId', auth.checkAuth, auth.checkAdmin, admin.deleteUser, function(req, res, next) {
-    console.log(response)
+router.post('/admin/deleteuser/:userId', auth.checkAuth, auth.checkAdmin, admin.deleteUser, function(req, res, next) {
 
 });
 router.get('/admin/membersList', auth.checkAdmin, admin.sendUserList)
