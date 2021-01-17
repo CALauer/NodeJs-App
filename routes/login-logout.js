@@ -19,7 +19,7 @@ router.get('/logout', function(req, res, next) {
 router.get('/login', function(req, res, next) {
   res.render('login-form', {page: ""})
 });
-router.post('/login', async function(req, res){
+router.post('/login', async function(req, res, next){
     var email = req.body.email_address;
     var password = req.body.password;
     db.query('SELECT * FROM users WHERE email = ?',[email], async function (error, results, fields) {
@@ -43,19 +43,13 @@ router.post('/login', async function(req, res){
                 res.redirect('/dashboard')
             }
             else{
-              res.send({
-                   "code":204,
-                   "success":"Email and password does not match"
-              })
+              res.redirect('/login')
             }
           }
           else{
-            res.send({
-              "code":206,
-              "success":"Email does not exits"
-                });
+            res.redirect('/login')
           }
-        }
-        });
-    })
+      }
+    });
+})
 module.exports = router;
