@@ -9,29 +9,34 @@
         <div class="main-container two-columns-style-2">
             <div>
                 <div class="account-navigation-column">
-                <h3>Account Overview</h3>
-                <ul class="account-nav-ul">
-                    <li class="account-main-nav">
-                        <a href="javascript:voide(0)">Add Member</a>
-                    </li>
-                    <li class="account-main-nav">
-                        <a href="javascript:voide(0)">Delete Member</a>
-                    </li>
-                    <li class="account-main-nav">
-                        <a href="javascript:voide(0)">Promote/Demote a Member</a>
-                    </li>
-
+                    <h3>Admin Panel</h3>
+                    <ul class="account-nav-ul">
+                        <li class="account-main-nav">
+                            <a href="javascript:void(0)" onclick="renderUserManager()">User Management</a>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div class="account-main-area">
-                <h4>Your Information</h4>
-                <p><b>Account Email: </b><%=email %></p>
-                <p><b>Account Title: </b><%=title %></p>
+                <h4>Site Metrics</h4>
+                <p><b>Flags: </b><%=email %></p>
+                <p><b>Users: </b><%=title %></p>
+                <p><b>New Posts: </b><%=title %></p>
+                <p><b>Something: </b><%=title %></p>
+            </div> 
+            <div></div>
+            <table>
+                <div>
+                    <table  id="memberlist">
 
+                    </table>
+                </div>
+            </table>
+
+
+                    
+                </table>
             </div>
-
-            </ul>
         </div>
     </div>
     </main>

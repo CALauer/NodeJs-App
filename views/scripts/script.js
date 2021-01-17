@@ -58,21 +58,18 @@ if(window.location.pathname == "/feed") {
         })
     }
 
-
 });    
-var accountOverview =  $('.account-overview')
-var accountWritePost = $('.account-write-post')
-var accountPosts = $('.account-posts')
- 
+let accountOverview =  $('.account-overview')
+let accountWritePost = $('.account-write-post')
+let accountPosts = $('.account-posts')
+alertBox = $('#alert_box')
 $('#myAccount-dropdown-link').click('click', function() {
     let x = $('.account-drop-down-menu');
     if (x.data('clicked', true) ) {
         x.fadeToggle(200).delay( 100 ).css({display: 'grid', top: 40, alignContent: 'flex-start'});
         }
     });
-
-
-    $('#user-post').on('click', '#submit-post', function(event) {
+$('#user-post').on('click', '#submit-post', function(event) {
         let dateObj = new Date();
         let month = dateObj.getUTCMonth() + 1; //months from 1-12
         let day = dateObj.getUTCDate();
@@ -87,15 +84,14 @@ $('#myAccount-dropdown-link').click('click', function() {
         console.log(postDate)
         let post = $('#post-body').html();
         let privacy = $('input[name=privacy_level]:checked', '#user-post').val()
-        $.ajax({
-            url: '/post-user-blog',
-            method: 'POST',
-            data: { title: title, post: post, privacy_level: privacy, date: postDate }
-            }).done(function(res) {
-                if (res.success) {
-                    displayUserPost()
-                }
-
+$.ajax({
+    url: '/post-user-blog',
+    method: 'POST',
+    data: { title: title, post: post, privacy_level: privacy, date: postDate }
+    }).done(function(res) {
+        if (res.success) {
+            displayUserPost()
+        }
     });
 })
 
@@ -204,5 +200,56 @@ $('document').ready(function() {
     console.log("Profile View") 
 })
 
+function renderUserManager() {
+    content = document.getElementById('memberlist')
+    content.innerHTML = "<tr><th>ID</th><th>Username</th></tr>"
+    $.ajax({
+        url: '/admin/membersList',
+        method: 'GET',
+        }).done(function(res) {
+            console.log(res)
+            if (res.success) {
+                data = res.results
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i])
+                        content.innerHTML += '<tr><td>'+ data[i].id +'</td><td>'+data[i].username+'</td><td>' +
+                        '<a href="javascript:void(0)" id="'+data[i].id+'" data="'+data[i].username+'" class="user-management">Delete User</a></td></tr>'
+                }
+            } else {
+                console.log("Request Failed")
+            }
+        })
+    }
+    $(document).on('click', '.user-management',function(){
+        userId = $(this).attr('id');
+        userName = $(this).attr('data');
+        console.log(userName)
+        alertBox.html(
+            "<div>Are you sure you want to delete: <span class='orange'>"+ userName +"</div>" +
+            "<div><button class='confirm-delete' id='confirm-delete' onclick='deleteUser(\""+userName+"\")'>Delete User</button><button  type='button' id='cancel-delete' class='cancel-delete' onclick='cancelAction()'>Cancel</button></div>"
+            );
+
+        alertBox.fadeIn();
+    });
+  
+function deleteUser(x) {
+    console.log(x)
+}
+function cancelAction() {
+    console.log("cancelled")
+}
+
+        // for (var i = 0; i < data.length; i++) {
+        //     myContent.innerHTML += '<div class="blog-content">' + '<ul><li><h4>' + data[i].title + '</h4></li><li class="username"><a href="/profileView/'+ data[i].username +'" id="'+ data[i].blogId +'">' + data[i].username + '</a></li><li class="date">' + data[i].date + '</li></ul><div class="blog-body">' + data[i].post + '</div><div id="'+ data[i].blogId +'" class="blog_actions">' +
+        //     '<ul class="blog_action_buttons_ul"><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Edit</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Remove</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Like</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Dislike</a></li></ul>'
+        // } 
+    //     accountPosts.fadeIn().css("display", "grid")
+    //     accountWritePost.css("display", "none")
+    //     accountOverview.css("display", "none")
+    // } else {
+    //     alertMsg = res.failed
+    //     myContent.innerHTML = '<div class="blog-content">You have no posts yet....post something.</p>'
+    //     }
+    // })   
 
 

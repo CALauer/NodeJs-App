@@ -32,7 +32,7 @@ router.post('/register', function(req,res){
    
 
     // Check for similar username/email
-    db.query('SELECT * FROM users WHERE email = ?',email, function (error, results, fields) {
+    db.query('SELECT * FROM users WHERE email = ? ',email, function (error, results, fields) {
       if (error) {
         res.send({
           "code":400,

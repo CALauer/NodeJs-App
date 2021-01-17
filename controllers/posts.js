@@ -21,7 +21,6 @@ let privacy_level = 1;
     })
 
 }
-exports.getPublicPosts = getPublicPosts
 
 
 function getUserPosts(req, res) {
@@ -44,7 +43,6 @@ function getUserPosts(req, res) {
 
     })
 } 
-exports.getUserPosts = getUserPosts
 
 function postUserBlog(req, res) {
     userID = req.session.userInfo.userId
@@ -77,4 +75,13 @@ function postUserBlog(req, res) {
             })
         }
     }
+function deletePost() {
+
+}
+exports.deletePost = deletePost
+
+exports.getPublicPosts = getPublicPosts
+
+exports.getUserPosts = getUserPosts
+
 exports.postUserBlog = postUserBlog

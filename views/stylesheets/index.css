@@ -64,6 +64,9 @@ a {
 a:hover {
     color: var(--main-link-color-hover);
 }
+.orange {
+    color: var(--main-link-color);
+}
 
 body {
     background-color: var(--main-bg-color);
@@ -253,7 +256,7 @@ input[type="text"], input[type="password"], input[type="email"] {
     font-weight: 500;
     cursor: pointer;
 }
-.btn-style-1:focus, .btn-style-a:active {
+.btn-style-1:focus, .btn-style-a:focus, .confirm-delete:focus, .cancel-delete:focus {
     border: none;
     outline: none;
 }
@@ -336,19 +339,46 @@ input[type="text"], input[type="password"], input[type="email"] {
 /* POP UP */
 
 .pop_up {
-    display: grid;
+    display: none;
     position: absolute;
     margin-left: auto;
     margin-right: auto;
     top: 200px;
     left: 0;
     right: 0;
-    width: 600px;
-    height: 400px;
-    background: grey;
-    box-shadow: 0px 4px 4px black;
+    max-width: 400px;
+    background: rgb(93, 93, 93);
+    box-shadow: 0px 8px 4px black;
     color: black;
     padding: 10px;
+}
+.pop_up div {
+    display: grid;
+    justify-self: center;
+    justify-content: center;
+}
+
+.confirm-delete {
+    display: inline;
+    width: 100px;
+    height: 25px;
+    border: none;
+    background: rgb(255, 92, 51);
+    align-content: center;
+    margin-top: 20px;
+}
+.cancel-delete {
+    display: inline;
+    width: 100px;
+    height: 25px;
+    border: none;
+    background: var(--main-button-color);
+    align-content: center;
+    margin-top: 20px;
+}
+.confirm-delete:hover, .cancel-delete:hover {
+    background: var(--main-hightlight-color);
+
 }
 /*  BLOG */
 .blog_actions {
@@ -405,4 +435,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 .upvote_icon {
     width: 15px;
+}
+th {
+    text-align: left;
 }
