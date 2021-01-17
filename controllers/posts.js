@@ -1,5 +1,4 @@
 const db = require('../database');
-const auth = require('../routes/dashboard');
 
 function getPublicPosts(req, res){
 let privacy_level = 1;

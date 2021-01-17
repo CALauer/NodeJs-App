@@ -11,6 +11,7 @@ router.get('/stocks', function(req, res) {
         res.render('stocks', {page: ""});
 });
 
+
 // router.post('/feed', publicPosts.getPublicPosts) 
 
 

@@ -1,0 +1,27 @@
+
+    <%- include('./partials/head'); %>
+
+    <header>
+        <%- include('./partials/nav'); %>
+    </header>
+    <main>
+    <div class="global-wrapper">
+        <div class="main-container ">
+            <table>
+                <tr>
+                    <th>Username</th>
+                    <th>Joined</th>
+                    <th>Title</th>
+                </tr>
+                <% for(i=0; i< list.length; i++) { %>
+                <tr>
+                    <td><a href="/profileView/<%= list[i].username %>"><%= list[i].username %></a></td>
+                    <td><%= list[i].date %></td>
+                    <td><%= list[i].title %></td>
+                </tr>
+                <% } %>
+            </table>
+        </div>
+    </div>
+    </main>
+<%- include('./partials/footer'); %>

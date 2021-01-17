@@ -7,7 +7,7 @@ function checkAuth(req, res, next){
         title = req.session.userInfo.userPerm
         userName = req.session.userInfo.username
         userId =req.session.userInfo.userId
-    }
     next()
+    }
 }
 exports.checkAuth = checkAuth
