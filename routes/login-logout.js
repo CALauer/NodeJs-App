@@ -11,12 +11,13 @@ router.get('/logout', function(req, res, next) {
     req.session.destroy()
     res.redirect('/')
     console.log(req.session)
+    next()
 }else{
-  res.redirect('/');
+  res.redirect('/', {page: ""});
 }
 })
 router.get('/login', function(req, res, next) {
-  res.render('login-form')
+  res.render('login-form', {page: ""})
 });
 router.post('/login', async function(req, res){
     var email = req.body.email_address;

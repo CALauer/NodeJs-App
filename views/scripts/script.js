@@ -2,34 +2,34 @@
 
 $('document').ready(function() {
     var dirName =  window.location.pathname;
-    function fetchJSON() {
-        $.getJSON( "/stocks/AMD", function( json ) {
-            price = json.price
-            stockSymbol = json.name
-            $('#details').html("Symbol: " + stockSymbol + "<br />Price:")  
-            $('#price').html(price)    
-        })
-    }
-    function getPrices() {
-        displayedPrice = $('#price').html()
+    // function fetchJSON() {
+    //     $.getJSON( "/stocks/AMD", function( json ) {
+    //         price = json.price
+    //         stockSymbol = json.name
+    //         $('#details').html("Symbol: " + stockSymbol + "<br />Price:")  
+    //         $('#price').html(price)    
+    //     })
+    // }
+    // function getPrices() {
+    //     displayedPrice = $('#price').html()
     
-        if (displayedPrice.length < 1) {
-            fetchJSON();
-        } else {
-            $.getJSON( "/stocks/AMD", function( json ) {
-                price = json.price
-                stockSymbol = json.name
+    //     if (displayedPrice.length < 1) {
+    //         fetchJSON();
+    //     } else {
+    //         $.getJSON( "/stocks/AMD", function( json ) {
+    //             price = json.price
+    //             stockSymbol = json.name
                   
-                $({ countNum: $('#price').html() }).animate({ countNum: price }, {
-                    duration: 1000,
-                    easing: 'linear',
-                    step: function () {
-                    $('#price').html((Math.round((this.countNum + Number.EPSILON) * 100) / 100));
-                    }
-                });
-            })
-        }
-    }     
+    //             $({ countNum: $('#price').html() }).animate({ countNum: price }, {
+    //                 duration: 1000,
+    //                 easing: 'linear',
+    //                 step: function () {
+    //                 $('#price').html((Math.round((this.countNum + Number.EPSILON) * 100) / 100));
+    //                 }
+    //             });
+    //         })
+    //     }
+    // }     
     // if ( dirName == "/stocks" ) {
     //     getPrices()
     //     setInterval(getPrices,2000);
@@ -48,8 +48,8 @@ if(window.location.pathname == "/feed") {
             if (res.success) {
                 data = res.data;
             for (var i = 0; i < data.length; i++) {
-                myContent.innerHTML += '<div class="blog-content">' + '<ul><li><h4>' + data[i].title + '</h4></li><li>UserName</li><li>Date: ' + data[i].date + '</li></ul><div class="blog-body">' + data[i].post + '</div></div></div>';
-                
+                myContent.innerHTML += '<div class="blog-content">' + '<ul><li><h4>' + data[i].title + '</h4></li><li class="username"><a href="/profileView/'+ data[i].username +'" id="'+ data[i].blogId +'">' + data[i].username + '</a></li><li class="date">' + data[i].date + '</li></ul><div class="blog-body">' + data[i].post + '</div><div id="'+ data[i].blogId +'" class="blog_actions">' +
+                '<ul class="blog_action_buttons_ul"><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Edit</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Remove</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'"><img src="../images/SVG/SVG/snile.svg" class="upvote_icon" alt="test"/></a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Dislike</a></li></ul>'
                 } 
             } else {
                 status = res.failed
@@ -181,22 +181,28 @@ function displayUserPost() {
         url: '/my-blog-posts',
         method: 'POST',
         }).done(function(res) {
+            myContent = document.getElementById('my_blog_posts');
+            myContent.innerHTML = "";
             if (res.success) {
                 data = res.data;
-                myContent = document.getElementById('my_blog_posts');
-                myContent.innerHTML = "";
+
             for (var i = 0; i < data.length; i++) {
-                myContent.innerHTML += '<div class="blog-content">' + '<ul><li><h4>' + data[i].title + '</h4></li><li class="username"><a href="" id="'+ data[i].blogId +'">' + data[i].username + '</a></li><li class="date">' + data[i].date + '</li></ul><div class="blog-body">' + data[i].post + '</div><div id="'+ data[i].blogId +'" class="blog_actions">' +
+                myContent.innerHTML += '<div class="blog-content">' + '<ul><li><h4>' + data[i].title + '</h4></li><li class="username"><a href="/profileView/'+ data[i].username +'" id="'+ data[i].blogId +'">' + data[i].username + '</a></li><li class="date">' + data[i].date + '</li></ul><div class="blog-body">' + data[i].post + '</div><div id="'+ data[i].blogId +'" class="blog_actions">' +
                 '<ul class="blog_action_buttons_ul"><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Edit</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Remove</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Like</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Dislike</a></li></ul>'
             } 
             accountPosts.fadeIn().css("display", "grid")
             accountWritePost.css("display", "none")
             accountOverview.css("display", "none")
         } else {
+            alertMsg = res.failed
             myContent.innerHTML = '<div class="blog-content">You have no posts yet....post something.</p>'
             }
         })
 }
+$('document').ready(function() {
+    if(window.location.pathname == "/profileView/:username") 
+    console.log("Profile View") 
+})
 
 
 

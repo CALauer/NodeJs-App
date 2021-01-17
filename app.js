@@ -17,6 +17,7 @@ const dashboardRouter = require('./routes/dashboard');
 const globalRouter = require('./routes/global');
 const stocksRouter = require('./routes/stocks');
 const feeds = require('./routes/feed');
+const profile = require('./routes/profileView');
 const { response } = require('express');
 // NEW 
 var MySQLStore = require('express-mysql-session')(session);
@@ -95,6 +96,7 @@ app.use('/', loginRouter);
 app.use('/', globalRouter);
 app.use('/', stocksRouter);
 app.use('/', feeds);
+app.use('/', profile);
 // app.use('/', userposts);
 
 // 

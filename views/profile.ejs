@@ -1,0 +1,31 @@
+
+    <%- include('./partials/head'); %>
+
+    <header>
+        <%- include('./partials/nav'); %>
+    </header>
+    <main>
+    <div class="global-wrapper">
+        <div class="main-container ">
+            <div class="profile-wrapper">
+            <div>
+                <div class="profile_img">
+                </div>
+                <ul>
+                    <li>Member Since:</li>
+                    <li>Profile Views:</li>
+                    <li>Likes:</li>
+                    <li>Dislikes:</li>
+                </ul>
+            </div>
+            <div>
+                <h4><%=userName %></h4>
+                <p><b>Account Email: </b><%=email %></p>
+                <p><b>Account Title: </b><%=title %></p>
+                <p><b>Posts: </b><%=postCount %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+<%- include('./partials/footer'); %>

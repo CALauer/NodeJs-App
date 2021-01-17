@@ -6,7 +6,7 @@ var bcrypt = require('bcryptjs');
 
 // to display registration form 
 router.get('/register', function(req, res, next) {
-  res.render('registration-form');
+  res.render('registration-form', {page: ""});
 });
 
 // to store user input detail on post request
