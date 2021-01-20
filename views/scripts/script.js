@@ -1,42 +1,37 @@
-
-
-$('document').ready(function() {
+$(document).ready(function() {
     var dirName =  window.location.pathname;
-    // function fetchJSON() {
-    //     $.getJSON( "/stocks/AMD", function( json ) {
-    //         price = json.price
-    //         stockSymbol = json.name
-    //         $('#details').html("Symbol: " + stockSymbol + "<br />Price:")  
-    //         $('#price').html(price)    
-    //     })
-    // }
-    // function getPrices() {
-    //     displayedPrice = $('#price').html()
-    
-    //     if (displayedPrice.length < 1) {
-    //         fetchJSON();
-    //     } else {
-    //         $.getJSON( "/stocks/AMD", function( json ) {
-    //             price = json.price
-    //             stockSymbol = json.name
-                  
-    //             $({ countNum: $('#price').html() }).animate({ countNum: price }, {
-    //                 duration: 1000,
-    //                 easing: 'linear',
-    //                 step: function () {
-    //                 $('#price').html((Math.round((this.countNum + Number.EPSILON) * 100) / 100));
-    //                 }
-    //             });
-    //         })
-    //     }
-    // }     
-    // if ( dirName == "/stocks" ) {
-    //     getPrices()
-    //     setInterval(getPrices,2000);
-    //         }
-    //     else {
-    //         return;
-    //     }
+    $(document).on('click','#insertForm', function() {
+        renderItemForm();
+    });
+    i= 0
+function renderItemForm() {
+    console.log("clicked")
+    form = $('#item-form-container')
+    console.log(form)
+    i++
+    myForm = '<div class="info-container-items two-columns" id="item-input-form" identifier="'+i+'"> <div class="info"> <input type="text" name="itemName[]" id="itemName" placeholder="Item Name" autocomplete="new-password" required> <input type="text" name="itemDesc[]" id="itemDesc" placeholder="Item description..." autocomplete="new-password" required> </div> <div class="info" id="values"> <input type="number" name="itemQty[]" id="itemQty" placeholder="Qty" required> <input type="number" name="itemPrice[]" id="itemPrice" placeholder="Price" required>' +
+    '</div><div id="result"></div> <button class="btn-style-delete span_columns" type="button" id="removeItemForm-btn">Remove</button></div>' 
+    form.append(myForm)
+    }
+myPriceArray = []
+myQtyArray = []
+invoiceForm = $('#generateInvoice')
+invoiceForm.on('change', '#values', function () {
+    itemPrice = ""
+    itemQty = ""
+    price = $(this).children().last().val()
+    quantity = $(this).children().first().val()
+    outputDiv = $(this).parent().find("#result")
+    if(quantity != "" && price != "") {
+        result = quantity * price 
+        outputDiv.html("$" + result.toFixed(2))
+    } else {
+        return
+    }
+    console.log(price)
+    console.log(quantity)
+})
+
 if(window.location.pathname == "/feed") {
 
     $.ajax({
@@ -95,6 +90,41 @@ $.ajax({
     });
 })
 
+class Alert {
+    constructor(message) {
+      this.msg = message;
+    }
+    success() {
+      alertBox.fadeIn()
+      alertBox.html(this.msg)
+      console.log("Success Called")
+      setTimeout(
+        function() 
+        {
+            alertBox.fadeOut()
+        }, 5000);
+    }
+    failed() {
+        alertBox.fadeIn()
+        alertBox.html(this.msg)
+        console.log("Failed")
+        setTimeout(
+          function() 
+          {
+              alertBox.fadeOut()
+          }, 3000);
+    }
+  }
+  
+//   let myAlert = new Alert("John");
+//   myAlert.success();
+//   myAlert.success();
+
+$('#notWorking').on("click", function() {
+    alertMsg = "This feature is not yet available"
+    let myAlert = new Alert(alertMsg)
+    myAlert.failed()
+})
 function checkTime(i) {
     if (i < 10) {
         i = "0" + i;
@@ -197,10 +227,7 @@ function displayUserPost() {
             }
         })
 }
-$('document').ready(function() {
-    if(window.location.pathname == "/profileView/:username") 
-    console.log("Profile View") 
-})
+
 
 function renderUserManager() {
     content = document.getElementById('memberlist')
@@ -221,17 +248,17 @@ function renderUserManager() {
                 console.log("Request Failed")
             }
         })
-    }
-    $(document).on('click', '.user-management',function(){
-        userId = $(this).attr('id');
-        userName = $(this).attr('data');
-        console.log(userName)
-        alertBox.html(
-            "<div>Are you sure you want to delete: <span class='orange'>"+ userName +"</div>" +
-            "<div><button class='confirm-delete' id='confirm-delete' onclick='deleteUser(\""+userName+"\")'>Delete User</button><button  type='button' id='cancel-delete' class='cancel-delete' onclick='cancelAction()'>Cancel</button></div>"
-            );
-        alertBox.fadeIn();
-    });
+}
+$(document).on('click', '.user-management',function(){
+    userId = $(this).attr('id');
+    userName = $(this).attr('data');
+    console.log(userName)
+    alertBox.html(
+        "<div>Are you sure you want to delete: <span class='orange'>"+ userName +"</div>" +
+        "<div><button class='confirm-delete' id='confirm-delete' onclick='deleteUser(\""+userName+"\")'>Delete User</button><button  type='button' id='cancel-delete' class='cancel-delete' onclick='cancelAction()'>Cancel</button></div>"
+        );
+    alertBox.fadeIn();
+});
   
 function deleteUser(username) {
     console.log(username)
@@ -249,22 +276,173 @@ function deleteUser(username) {
 
     return
 }
-function cancelAction() {
+let cancelAction = () => {
     setInterval(alertBox.fadeOut(), 2000)
     console.log("cancelled")
 }
 
-        // for (var i = 0; i < data.length; i++) {
-        //     myContent.innerHTML += '<div class="blog-content">' + '<ul><li><h4>' + data[i].title + '</h4></li><li class="username"><a href="/profileView/'+ data[i].username +'" id="'+ data[i].blogId +'">' + data[i].username + '</a></li><li class="date">' + data[i].date + '</li></ul><div class="blog-body">' + data[i].post + '</div><div id="'+ data[i].blogId +'" class="blog_actions">' +
-        //     '<ul class="blog_action_buttons_ul"><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Edit</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Remove</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Like</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Dislike</a></li></ul>'
-        // } 
-    //     accountPosts.fadeIn().css("display", "grid")
-    //     accountWritePost.css("display", "none")
-    //     accountOverview.css("display", "none")
-    // } else {
-    //     alertMsg = res.failed
-    //     myContent.innerHTML = '<div class="blog-content">You have no posts yet....post something.</p>'
-    //     }
-    // })   
+$(document).on("click", '#removeItemForm-btn', function(e) {
+        $(this).parent().remove()
+})
+let sendInvoice = () => {
+ //get input, select, textarea of form
+ let sender = $('#senderCompany').val();
+ let senderAdd = $('#senderAddress').val();
+ let senderAdd2 = $('#senderAddress2').val();
+ let senderEmail = $('#senderEmail').val();
+ let senderTel = $('#senderTele').val();
+ let senderSlogan = $('#senderSlogan').val();
+ let recName = $('#recName').val()
+ let recCompAdd = $('#recCompanyAdd').val()
+ let recCompAdd2 = $('#recCompanyAdd2').val()
+ let checkForItems = $('#generateInvoice').find('div#item-input-form').each(function (e) {})
 
+ myArray = []
+ myObject = {}
 
+ if((sender == "") || (senderAdd == "") || (senderAdd2 == "") || (senderEmail == "") ||  (senderTel == "")) {
+    myMsg = "You need to fill in your contact information"
+    let myAlert = new Alert(myMsg);
+    myAlert.failed(); 
+    return 
+ } else if((recName == "") || (recCompAdd == "") || (recCompAdd2 =="")){
+    myMsg = "You need to fill in the receivers information"
+    let myAlert = new Alert(myMsg);
+    myAlert.failed(); 
+    return 
+ } else {
+    if(checkForItems.length < 1) {
+        myMsg = "You need to add items to your invoice"
+        let myAlert = new Alert(myMsg);
+        myAlert.failed();
+    } else {
+        console.log("You have at least 1 item")
+        $('#generateInvoice').find('div#item-input-form').each(function (e) {
+            $('#item-input-form').find('input').each(function (e, value) {
+                Object.defineProperties(myObject, {
+                    [this.id]: {
+                      value: this.value
+                    }
+                  });
+            })
+            myArray.push(myObject)
+            console.log(myArray)
+            if(myArray.length < 1) {
+                console.log("You need to add items")
+            } else if(myArray.length >= 1)
+                for(i =0; i < myArray.length; i++) {
+                    if(myArray[i].itemName == "" && myArray[i].itemPrice == "" && myArray[i].itemQty == "" && myArray[i].itemDesc == "") {
+                        myMsg = "You need to fill in all the fields"
+                        let myAlert = new Alert(myMsg);
+                        myAlert.failed();
+                    }
+                    else if(myArray[i].itemName == "") {
+                        myMsg = "One of your items is missing a name"
+                        let myAlert = new Alert(myMsg);
+                        myAlert.failed();
+                    }
+                    else if(myArray[i].itemDesc == "") {
+                        myMsg = "Your items must have a description"
+                        let myAlert = new Alert(myMsg);
+                        myAlert.failed();
+                    }
+                    else if(myArray[i].itemQty == "") {
+                        myMsg = "One of your items is missing the quanitity"
+                        let myAlert = new Alert(myMsg);
+                        myAlert.failed();
+                    } 
+                    else if(myArray[i].itemPrice == "") {
+                        myMsg = "One of your items is missing its price"
+                        let myAlert = new Alert(myMsg);
+                        myAlert.failed();
+                    }
+                    else {
+                    formData = $('#generateInvoice').serialize()
+                    $.ajax({
+                        url: "/recInvoice",
+                        type: "POST",
+                        data: formData,
+                        success: function(res) {
+                            console.log(res)
+                        if (res.success == true) {
+                            alertMsg = "Your account has been created. Please login.";
+                            // alertBox.html(alertMsg) 
+                            data = res.data
+                                myMsg = "Your invoice is ready"
+                                let myAlert = new Alert(myMsg);
+                                myAlert.success();
+                                revealData(data)
+                            }
+                            
+                        else {
+                            myMsg = "Something went wrong"
+                            let myAlert = new Alert(myMsg);
+                            myAlert.success();  
+                                }
+                            }
+                        })
+                    }
+                }
+            })        
+        }
+    }
+}
+
+let revealData = (data) => {
+    if(!data.itemName.length) {
+        alertMsg = 
+        alertMsg = "You must add items to the form."
+        let myAlert = new Alert(alertMsg)
+        myAlert.failed()
+        return false
+    } else {
+        invoiceHead = $('#invoiceHead') 
+        $('#item-input-form').remove()
+        invoiceHead.html(
+        '<div><h1>'+data.senderName+'</h1>'+
+        '<p>'+data.senderAddress+'</p>'+
+        '<p>'+data.senderAddress2+'</p>'+
+        '<p>'+data.senderEmail+'</p>'+
+        '<p>'+data.senderTele+'</p>'+
+        '<p><h2>Receivers Information</h2></p>'+
+
+        '<p>'+data.recName+'</p>'+
+        '<p>'+data.recCompanyAdd+'</p>'+
+        '<p>'+data.recCompanyAdd2+'</p>'+
+        '<h3>Items</h3><div><table width="100%" id="itemization">'+
+        '<tr>'+
+            '<th>Item Name</th>'+
+            '<th>Item Description</th>'+
+            '<th>Item Qty</th>'+
+            '<th>Item Price</th>'+
+            '<th>Items Total</th></tr></table>'
+        )
+        renderTotals(data)
+    }
+}
+    
+let renderTotals = (data) => {
+    items = $('#itemization')
+    grandTotal = 0;
+    for(i = 0; i <data.itemName.length; i++) {
+        total =  data.itemQty[i] * data.itemPrice[i]
+        grandTotal = grandTotal + total;
+        myTotal =  grandTotal
+        items.append(
+            '<tr><td>'+data.itemName[i]+'</td>'+
+            '<td>'+data.itemDesc[i]+'</td>'+
+            '<td>'+data.itemQty[i]+'</td>'+
+                '<td>'+data.itemPrice[i]+'</td>'+
+                '<td>'+total.toFixed(2)+'</td>'+
+                '<td>' +grandTotal.toFixed(2)+'</td>'+
+            '</tr>')
+    }
+    renderThanks(data)
+}
+let renderThanks = (data) => {
+    note = $('#note')
+    msg = "A custumized message here, along with your personal info like name, and title."
+    note.html("<div>"+msg+"<div><button type='button' class='btn-style-save'>Save</button></div></div>")
+}
+
+// console.log(senderCompany.text($(senderCompany).val()))
