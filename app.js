@@ -6,7 +6,7 @@ const router = express.Router()
 const bodyParser=require('body-parser');
 const db = require('./database')
 const app = express()
-var PORT = process.env.PORT || 5000;
+var PORT = process.env.PORT || 5656;
 
 
 
@@ -18,7 +18,8 @@ const globalRouter = require('./routes/global');
 const stocksRouter = require('./routes/stocks');
 const feeds = require('./routes/feed');
 const profile = require('./routes/profileView');
-const members = require('./routes/members.js');
+const members = require('./routes/members');
+const invoice = require('./routes/invoice');
 const { response } = require('express');
 // NEW 
 var MySQLStore = require('express-mysql-session')(session);
@@ -99,6 +100,7 @@ app.use('/', stocksRouter);
 app.use('/', feeds);
 app.use('/', profile);
 app.use('/', members);
+app.use('/', invoice);
 // app.use('/', userposts);
 
 // 

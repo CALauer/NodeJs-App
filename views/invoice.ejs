@@ -1,0 +1,76 @@
+<%- include('./partials/head'); %>
+    <header>
+        <%- include('./partials/nav'); %>
+    </header>
+    <main>
+        <div class="global-wrapper two-columns"> 
+            <div>
+                <form action="" method="" id="generateInvoice">
+                <div class="main-container">
+                    <h4>Sending Party</h4>
+                    <div class="info-container two-columns">
+                        <div class="info">
+                            <input type="text" name="senderName" id="senderCompany" placeholder="Your Company Name"  class="company-name" autocomplete="new-password" required>
+                            <input type="text" name="senderAddress" id="senderAddress" placeholder="Street Address"   class="address" autocomplete="new-password" required>
+                            <input type="text" name="senderAddress2" placeholder="City, State, Zip"  id="senderAddress2"   class="address"  required>
+                        </div>
+                        <!-- CONTACT INFO -->
+                        <div class="info">
+                            <input type="email" name="senderEmail" placeholder="Company Email" id="senderEmail"   class="address" autocomplete="new-password" required>
+                            <input type="tel" name="senderTele" placeholder="Company Phone" id="senderTele"  class="address" autocomplete="new-password" required>
+                            <a href="javascript:void(0)" id="notWorking">Logo Upload</a>
+                        </div>
+                    </div>
+                    <h4>Receiving Party</h4>
+                    <div class="info-container two-columns">
+                        <div class="info">
+                            <input type="text" name="recName" id="recName" placeholder="Company/Individual Name" class="company-name" required>
+                            <input type="text" name="recCompanyAdd" id="recCompanyAdd" placeholder="Street Address"  class="address" required>
+                            <input type="text" name="recCompanyAdd2" id="recCompanyAdd2" placeholder="City, State, Zip" class="address" required>
+                        </div>
+                        <div class="info">
+                        </div>
+                    </div>
+                    <!-- ITEMS -->
+                    <h4>Items</h4>
+                    <div id="item-form-container">
+                        <button type="button" class="btn-style-add" id="insertForm" >+</button>
+                    </div>
+                    <div class="buttons-display">
+                       <div></div><div></div>
+                        <button class="invoice-sbt-btn" type="button" onclick="sendInvoice()">Preview</button>
+                    </div>
+                    </div>
+                </form>
+            </div> 
+            <div>
+                <div class="invoice-preview" id="invoiceHead">
+                    </div>
+                    <div class="invoice-note">
+                        <h4>Future Member Features</h4>
+                        <ul>
+                            <li>Dynamically Generated Invoice Numbers</li>
+                            <li>Your information as a sender will automatically be applied, or you can choose & save presets</li>
+                            <li>Custom Logo Upload</li>
+                            <li>Template Access</li>
+                            <li>Editable Preview</li>
+                            <li>Customizable Note</li>
+                        </ul>
+                        <br />
+                        <h4>Visitors</h4>
+                        <ul>
+                            <li>You cannot save your invoice</li>
+                            <li>Invoice Number will always be #0001</li>
+                            <li>You cannot add a logo</li>
+                            <li>Limited to the default template</li>
+                        </ul>
+                        <br />
+                        <h4>Hit <span class="orange">[CTRL + P]</span> for printable invoice once submitted</h4> 
+                    </div>
+
+            </div>
+
+    </div>
+</main>
+
+<%- include('./partials/footer'); %>
