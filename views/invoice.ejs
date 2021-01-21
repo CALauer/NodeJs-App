@@ -13,6 +13,7 @@
                             <input type="text" name="senderName" id="senderCompany" placeholder="Your Company Name"  class="company-name" autocomplete="new-password" required>
                             <input type="text" name="senderAddress" id="senderAddress" placeholder="Street Address"   class="address" autocomplete="new-password" required>
                             <input type="text" name="senderAddress2" placeholder="City, State, Zip"  id="senderAddress2"   class="address"  required>
+
                         </div>
                         <!-- CONTACT INFO -->
                         <div class="info">
@@ -27,19 +28,25 @@
                             <input type="text" name="recName" id="recName" placeholder="Company/Individual Name" class="company-name" required>
                             <input type="text" name="recCompanyAdd" id="recCompanyAdd" placeholder="Street Address"  class="address" required>
                             <input type="text" name="recCompanyAdd2" id="recCompanyAdd2" placeholder="City, State, Zip" class="address" required>
+                            <input type="number" id="discount" name="discount"
+                            placeholder="Discount 5% = 5">
+                            <input type="number" name="taxrate" id="taxrate" placeholder="Taxrate 5% = 5"> 
                         </div>
                         <div class="info">
+                            <div class="multplier-div">
+
+                            </div>
                         </div>
                     </div>
                     <!-- ITEMS -->
                     <h4>Items</h4>
                     <div id="item-form-container">
-                        <button type="button" class="btn-style-add" id="insertForm" >+</button>
+                        <a href="#" class="btn-style-add" id="insertForm">+</a>
                     </div>
                     <div class="buttons-display">
                        <div></div><div></div>
-                       <a href="javascript:void(0)" onclick="preloadInvoice()">Pre-load</a>
-                        <button class="invoice-sbt-btn" type="button" onclick="sendInvoice()">Preview</button>
+                       <a href="javascript:void(0)" id="preloadInvoice">Pre-load</a>
+                        <a href="javascript:void(0)" id="sendInvoice" >Preview</a>
                     </div>
                     </div>
                 </form>

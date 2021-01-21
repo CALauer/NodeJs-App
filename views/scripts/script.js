@@ -1,6 +1,141 @@
 $(document).ready(function() {
     var dirName =  window.location.pathname;
-    $(document).on('click','#insertForm', function() {
+    $('#preloadInvoice').on('click', function(){
+
+
+        //get input, select, textarea of form
+    $('#senderCompany').val("Viabull LLC");
+    $('#senderAddress').val("123 Fake Street");
+    $('#senderAddress2').val("Southern, CA 12345");
+    $('#senderEmail').val("myFakeEmail@google.com");
+    $('#senderTele').val("(123)-123-1234");
+    $('#senderSlogan').val("Invest");
+    $('#recName').val("Johnsku Holdings Corp.")
+    $('#recCompanyAdd').val("123 Fake Road")
+    $('#recCompanyAdd2').val("Northern, CA 12345")
+    })
+    $('#myAccount-dropdown-link').click('click', function() {
+        let x = $('.account-drop-down-menu');
+        if (x.data('clicked', true) ) {
+            x.fadeToggle(200).delay( 100 ).css({display: 'grid', top: 40, alignContent: 'flex-start'});
+            }
+        });
+    $('#user-post').on('click', '#submit-post', function(event) {
+            let dateObj = new Date();
+            let month = dateObj.getUTCMonth() + 1; //months from 1-12
+            let day = dateObj.getUTCDate();
+            let year = dateObj.getUTCFullYear();
+            let hour = dateObj.getHours();
+            minutes = dateObj.getMinutes()
+            minutes = checkTime(minutes)
+            event.preventDefault();
+            let title = $('#title').val();
+            let postDate = year + "/" + month + "/" + day + " " + hour + ":" + minutes;
+    
+            console.log(postDate)
+            let post = $('#post-body').html();
+            let privacy = $('input[name=privacy_level]:checked', '#user-post').val()
+    $.ajax({
+        url: '/post-user-blog',
+        method: 'POST',
+        data: { title: title, post: post, privacy_level: privacy, date: postDate }
+        }).done(function(res) {
+            if (res.success) {
+                displayUserPost()
+            }
+        });
+    })
+    $('#sendInvoice').on('click', function(){
+        let sender = $('#senderCompany').val();
+        let senderAdd = $('#senderAddress').val();
+        let senderAdd2 = $('#senderAddress2').val();
+        let senderEmail = $('#senderEmail').val();
+        let senderTel = $('#senderTele').val();
+        let recName = $('#recName').val()
+        let recCompAdd = $('#recCompanyAdd').val()
+        let recCompAdd2 = $('#recCompanyAdd2').val()
+        let taxrate = $('#taxrate').val()
+        let discount = $('#discount').val()
+        let checkForItems = $('#generateInvoice').find('div#item-input-form').each(function (e) {})
+       console.log(taxrate)
+       console.log(discount)
+        myArray = []
+        myObject = {}
+       
+        if((sender == "") || (senderAdd == "") || (senderAdd2 == "") || (senderEmail == "") ||  (senderTel == "")) {
+           myMsg = "You need to fill in your contact information"
+           let myAlert = new Alert(myMsg);
+           myAlert.failed(); 
+           return 
+        } else if((recName == "") || (recCompAdd == "") || (recCompAdd2 =="")){
+           myMsg = "You need to fill in the receivers information"
+           let myAlert = new Alert(myMsg);
+           myAlert.failed(); 
+           return 
+        } else {
+           if(checkForItems.length < 1) {
+               myMsg = "You need to add items to your invoice"
+               let myAlert = new Alert(myMsg);
+               myAlert.failed();
+           } else {
+               console.log("You have at least 1 item")
+               $('#generateInvoice').find('div#item-input-form').each(function (e) {
+                   $('#item-input-form').find('input').each(function (e, value) {
+                       Object.defineProperties(myObject, {
+                           [this.id]: {
+                             value: this.value
+                           }
+                         });
+                   })
+                   myArray.push(myObject)
+                   console.log(myArray)
+                   if(myArray.length < 1) {
+                       console.log("You need to add items")
+                   } else if(myArray.length >= 1)
+                       for(i =0; i < myArray.length; i++) {
+                           if(myArray[i].itemName == "" && myArray[i].itemPrice == "" && myArray[i].itemQty == "" && myArray[i].itemDesc == "") {
+                               myMsg = "You need to fill in all the fields"
+                               let myAlert = new Alert(myMsg);
+                               myAlert.failed();
+                           }
+                           else if(myArray[i].itemName == "") {
+                               myMsg = "One of your items is missing a name"
+                               let myAlert = new Alert(myMsg);
+                               myAlert.failed();
+                           }
+                           else if(myArray[i].itemDesc == "") {
+                               myMsg = "Your items must have a description"
+                               let myAlert = new Alert(myMsg);
+                               myAlert.failed();
+                           }
+                           else if(myArray[i].itemQty == "") {
+                               myMsg = "One of your items is missing the quanitity"
+                               let myAlert = new Alert(myMsg);
+                               myAlert.failed();
+                           } 
+                           else if(myArray[i].itemPrice == "") {
+                               myMsg = "One of your items is missing its price"
+                               let myAlert = new Alert(myMsg);
+                               myAlert.failed();
+                           }
+                           else {
+                           formData = $('#generateInvoice').serialize()
+                           // ajaxReqPostInvoice()
+                           ajaxReqPostInvoice()
+                           
+                       }
+                   }
+                   })        
+               }
+           }
+       })
+    
+    $('#notWorking').on("click", function() {
+        alertMsg = "This feature is not yet available"
+        let myAlert = new Alert(alertMsg)
+        myAlert.failed()
+    })
+    $('#insertForm').on('click', function() {
         renderItemForm();
     });
     i= 0
@@ -58,38 +193,6 @@ let accountOverview =  $('.account-overview')
 let accountWritePost = $('.account-write-post')
 let accountPosts = $('.account-posts')
 alertBox = $('#alert_box')
-$('#myAccount-dropdown-link').click('click', function() {
-    let x = $('.account-drop-down-menu');
-    if (x.data('clicked', true) ) {
-        x.fadeToggle(200).delay( 100 ).css({display: 'grid', top: 40, alignContent: 'flex-start'});
-        }
-    });
-$('#user-post').on('click', '#submit-post', function(event) {
-        let dateObj = new Date();
-        let month = dateObj.getUTCMonth() + 1; //months from 1-12
-        let day = dateObj.getUTCDate();
-        let year = dateObj.getUTCFullYear();
-        let hour = dateObj.getHours();
-        minutes = dateObj.getMinutes()
-        minutes = checkTime(minutes)
-        event.preventDefault();
-        let title = $('#title').val();
-        let postDate = year + "/" + month + "/" + day + " " + hour + ":" + minutes;
-
-        console.log(postDate)
-        let post = $('#post-body').html();
-        let privacy = $('input[name=privacy_level]:checked', '#user-post').val()
-$.ajax({
-    url: '/post-user-blog',
-    method: 'POST',
-    data: { title: title, post: post, privacy_level: privacy, date: postDate }
-    }).done(function(res) {
-        if (res.success) {
-            displayUserPost()
-        }
-    });
-})
-
 class Alert {
     constructor(message) {
       this.msg = message;
@@ -115,16 +218,7 @@ class Alert {
           }, 3000);
     }
   }
-  
-//   let myAlert = new Alert("John");
-//   myAlert.success();
-//   myAlert.success();
 
-$('#notWorking').on("click", function() {
-    alertMsg = "This feature is not yet available"
-    let myAlert = new Alert(alertMsg)
-    myAlert.failed()
-})
 function checkTime(i) {
     if (i < 10) {
         i = "0" + i;
@@ -285,89 +379,7 @@ $(document).on("click", '#removeItemForm-btn', function(e) {
         $(this).parent().remove()
 })
 
-let sendInvoice = () => {
- //get input, select, textarea of form
- let sender = $('#senderCompany').val();
- let senderAdd = $('#senderAddress').val();
- let senderAdd2 = $('#senderAddress2').val();
- let senderEmail = $('#senderEmail').val();
- let senderTel = $('#senderTele').val();
- let senderSlogan = $('#senderSlogan').val();
- let recName = $('#recName').val()
- let recCompAdd = $('#recCompanyAdd').val()
- let recCompAdd2 = $('#recCompanyAdd2').val()
- let checkForItems = $('#generateInvoice').find('div#item-input-form').each(function (e) {})
 
- myArray = []
- myObject = {}
-
- if((sender == "") || (senderAdd == "") || (senderAdd2 == "") || (senderEmail == "") ||  (senderTel == "")) {
-    myMsg = "You need to fill in your contact information"
-    let myAlert = new Alert(myMsg);
-    myAlert.failed(); 
-    return 
- } else if((recName == "") || (recCompAdd == "") || (recCompAdd2 =="")){
-    myMsg = "You need to fill in the receivers information"
-    let myAlert = new Alert(myMsg);
-    myAlert.failed(); 
-    return 
- } else {
-    if(checkForItems.length < 1) {
-        myMsg = "You need to add items to your invoice"
-        let myAlert = new Alert(myMsg);
-        myAlert.failed();
-    } else {
-        console.log("You have at least 1 item")
-        $('#generateInvoice').find('div#item-input-form').each(function (e) {
-            $('#item-input-form').find('input').each(function (e, value) {
-                Object.defineProperties(myObject, {
-                    [this.id]: {
-                      value: this.value
-                    }
-                  });
-            })
-            myArray.push(myObject)
-            console.log(myArray)
-            if(myArray.length < 1) {
-                console.log("You need to add items")
-            } else if(myArray.length >= 1)
-                for(i =0; i < myArray.length; i++) {
-                    if(myArray[i].itemName == "" && myArray[i].itemPrice == "" && myArray[i].itemQty == "" && myArray[i].itemDesc == "") {
-                        myMsg = "You need to fill in all the fields"
-                        let myAlert = new Alert(myMsg);
-                        myAlert.failed();
-                    }
-                    else if(myArray[i].itemName == "") {
-                        myMsg = "One of your items is missing a name"
-                        let myAlert = new Alert(myMsg);
-                        myAlert.failed();
-                    }
-                    else if(myArray[i].itemDesc == "") {
-                        myMsg = "Your items must have a description"
-                        let myAlert = new Alert(myMsg);
-                        myAlert.failed();
-                    }
-                    else if(myArray[i].itemQty == "") {
-                        myMsg = "One of your items is missing the quanitity"
-                        let myAlert = new Alert(myMsg);
-                        myAlert.failed();
-                    } 
-                    else if(myArray[i].itemPrice == "") {
-                        myMsg = "One of your items is missing its price"
-                        let myAlert = new Alert(myMsg);
-                        myAlert.failed();
-                    }
-                    else {
-                    formData = $('#generateInvoice').serialize()
-                    // ajaxReqPostInvoice()
-                    ajaxReqPostInvoice()
-                    
-                }
-            }
-            })        
-        }
-    }
-}
 
 let ajaxReqPostInvoice = () => {
     $.ajax({
@@ -383,6 +395,7 @@ let ajaxReqPostInvoice = () => {
                 let myAlert = new Alert(myMsg);
                 myAlert.success();
                 revealData(data)
+                console.log(data)
             }
             
         else {
@@ -404,11 +417,12 @@ let revealData = (data) => {
         alertMsg = "You must add items to the form."
         let myAlert = new Alert(alertMsg)
         myAlert.failed()
+        console.log("Failed...itemName does not exist")
         return false
     } else {
-        invoiceHead = $('#invoiceHead') 
-        $('#item-input-form').remove()
-        invoiceHead.html('<div class="invoice-one-column-head"><div><h1 class="heading-style-2 print-color-1">'+data.senderName+'</h1><h4 class="heading-style-3 print-color-1">Company Slogan</h4></div><div class="pad-top-20"><h4 class="heading-style-4 print-color-1">'+data.senderAddress+'</h4><h4 class="heading-style-4 print-color-1">'+data.senderAddress2+'</h4></div></div><div class="invoice-two-column-head"><div><h1 class="heading-style-1 print-color-1">Invoice</h1><h4 class="heading-style-4 print-color-2">#0001</h4></div><div class="inline"><ul><li class="print-li print-color-2">'+data.senderEmail+'</li><li class="print-li print-color-2">'+data.senderTele+'</li></ul></div></div><div class="invoice-two-column-head-rec-details"><div><h2 class="heading-style-2 print-color-1">Invoice To:</h2><h3 class="heading-style-3 print-color-1">'+data.recName+'</h3><p class="print-color-2 fs-med">'+data.recCompanyAdd+'</p><p class="print-color-2 fs-med">'+data.recCompanyAdd2+'</p></div><div><table class="invoice-display-table"><tr class="underline"><td class="print-color-1">Total Due:</td><td class="print-color-1 bold align-right" id="grand-total"></td></tr><tr><td class="print-color-2">Invoice No:</td><td class="align-right print-color-1 pad-left-20">#0001</td></tr><tr><td class="print-color-2">Invoice Date</td><td class="align-right print-color-1 pad-left-20">Janurary 20, 2021</td></tr></table></div></div><div class="items-display"><table class="items-table" id="items-table"><tr><th>Items Description</th><th class="align-center">QTY</th><th class="align-center">PRICE</th><th class="align-right">TOTAL</th></tr>')
+        invoiceHead = $('#invoiceHead'); 
+        $('#item-input-form').remove();
+        invoiceHead.html('<div class="invoice-one-column-head"><div><h1 class="heading-style-2 print-color-1">'+data.senderName+'</h1><h4 class="heading-style-3 print-color-1">Company Slogan</h4></div><div class="pad-top-20"><h4 class="heading-style-4 print-color-1">'+data.senderAddress+'</h4><h4 class="heading-style-4 print-color-1">'+data.senderAddress2+'</h4></div></div><div class="invoice-two-column-head"><div><h1 class="heading-style-1 print-color-1">Invoice</h1><h4 class="heading-style-4 print-color-2">#0001</h4></div><div class="inline"><ul><li class="print-li print-color-2">'+data.senderEmail+'</li><li class="print-li print-color-2">'+data.senderTele+'</li></ul></div></div><div class="invoice-two-column-head-rec-details"><div><h2 class="heading-style-2 print-color-1">Invoice To:</h2><h3 class="heading-style-3 print-color-1">'+data.recName+'</h3><p class="print-color-2 fs-med">'+data.recCompanyAdd+'</p><p class="print-color-2 fs-med">'+data.recCompanyAdd2+'</p></div><div><table class="invoice-display-table"><tr class="underline"><td class="print-color-1">Total Due:</td><td class="print-color-1 bold align-right" id="grand-total"></td></tr><tr><td class="print-color-2">Invoice No:</td><td class="align-right print-color-1 pad-left-20">#0001</td></tr><tr><td class="print-color-2">Invoice Date</td><td class="align-right print-color-1 pad-left-20">Janurary 20, 2021</td></tr></table></div></div><div class="items-display"><table class="items-table" id="items-table"><tr><th>Items Description</th><th class="align-center">QTY</th><th class="align-center">PRICE</th><th class="align-right">TOTAL</th></tr>');
         renderTotals(data)
     }
 }
@@ -416,36 +430,37 @@ let renderTotals = (data) => {
     items = $('#items-table')
     displayedGrand = $('#grand-total')
     grandTotal = 0;
-    subtotal = 0
-    discount = 0
-    taxrate = 0
+    subtotal = 0;
+    taxrate = data.taxrate
+    discount = data.discount
+
     for(i = 0; i <data.itemName.length; i++) {
         // GENERATING ITEMIZED TOTALS
-        total =  data.itemQty[i] * data.itemPrice[i]
-        grandTotal = grandTotal + total;
+        itemtotal =  data.itemQty[i] * data.itemPrice[i]
+        subtotal = subtotal + itemtotal;
         // GENERATING GRAND TOTAL
-        if( myTotal.length == 0) {
-        myTotal.push(grandTotal)
+        if( mySubtotal.length == 0) {
+        mySubtotal.push(subtotal)
         } else {
-        myTotal.pop()  
-        myTotal.push(grandTotal)  
+        mySubtotal.pop()  
+        mySubtotal.push(mySubtotal)  
         }
         items.append(
-            '<tr><td><h4 class="heading-style-4 print-color-1">'+data.itemName[i]+'</h4><p class="print-color-2 fs-small italic">'+data.itemDesc[i]+'</p></td><td class="align-center">'+data.itemQty[i]+'</td><td class="align-center">$'+data.itemPrice[i]+'</td><td class="align-right">$'+total.toFixed(2)+'</td></tr>')
+            '<tr><td><h4 class="heading-style-4 print-color-1">'+data.itemName[i]+'</h4><p class="print-color-2 fs-small italic">'+data.itemDesc[i]+'</p></td><td class="align-center">'+data.itemQty[i]+'</td><td class="align-center">$'+data.itemPrice[i]+'</td><td class="align-right">$'+itemtotal.toFixed(2)+'</td></tr>')
 
     }
     items.append("</table></div>")
-    displayedGrand.html("$" +myTotal)
-    // if((taxrate > 0) && (discount > 0)) {
-    //    saved = discount / 100 * grandTotal
-    //    subtotal = grandTotal - saved
-    //    taxed = taxrate / 100 * grandTotal
-    //    grandTotal = grandTotal + taxed
-    //    mySubtotal.push(subtotal)
-    //    myTotal.pop()
-    //    myTotal.push(grandTotal)
-    //    myDiscount.push(saved)
-    //    myTax.push(taxed)
+    if(taxrate > 0 && discount > 0) {
+        saved = discount / 100 * mySubtotal
+        newSubtotal = mySubtotal - saved;
+        taxed = taxrate / 100 * newSubtotal
+        total = newSubtotal + taxed
+        myTotal.push(total.toFixed(2))
+        myTax.push(taxed.toFixed(2))
+        myDiscount.push(saved.toFixed(2))
+        mySubtotal.pop()
+        mySubtotal.push(newSubtotal.toFixed(2))
+ }
     // } else if ((taxrate > 0) && (discount == 0)) {
     //    taxed = taxrate / 100 * grandTotal 
     //    grandTotal = grandTotal + taxed
@@ -461,7 +476,7 @@ let renderTotals = (data) => {
 
 let renderThanks = (data) => {
     thanks = $('#thanks')
-    thanks.append('<table class="totals-table"><tr><td class="print-color-2">Subtotal:</td><td class="align-right pad-left-20 bold" id="subtotal">$1200.00</td></tr><tr><td class="print-color-2">Sales Tax:</td><td class="align-right pad-left-20 bold"id="taxed">$0.00</td></tr><tr><td class="print-color-2">Discount:</td><td class="align-right pad-left-20 bold" id="saved">$0.00</td></tr><tr><td class="print-color-2">Total:</td><td class="align-right pad-left-20 bold" id="grand-total-2">$1200.00</td></tr></table></div><div class="align-left"><h3 class="heading-style-3 print-color-1" id="senderMsg">Thank you for your business!</h3><p class="print-color-2" id="senderTitle">Title</p><p class="print-color-1" id="senderFullName">Your Name Here</p><button class="btn-style-save" onclick="window.print()">Print</button></div>')
+    thanks.html('<table class="totals-table"><tr><td class="print-color-2">Discount:</td><td class="align-right pad-left-20 bold" id="discount">$'+myDiscount+'</td></tr><tr><td class="print-color-2">Subtotal:</td><td class="align-right pad-left-20 bold"id="subtotal">$'+mySubtotal+'</td></tr><tr><td class="print-color-2">Tax:</td><td class="align-right pad-left-20 bold" id="taxed">$'+myTax+'</td></tr><tr><td class="print-color-2">Total:</td><td class="align-right pad-left-20 bold" id="grand-total-2">$'+myTotal+'</td></tr></table></div><div class="align-left"><h3 class="heading-style-3 print-color-1" id="senderMsg">Thank you for your business!</h3><p class="print-color-2" id="senderTitle"></p><p class="print-color-1" id="senderFullName"></p><button class="btn-style-save" onclick="window.print()">Print</button></div>')
     $([ document.documentElement, document.body ]).animate(
         {
             scrollTop: ($('#invoiceHead').offset().top - 60 )
@@ -469,17 +484,6 @@ let renderThanks = (data) => {
         800
     );
 }
-let preloadInvoice = () => {
-     //get input, select, textarea of form
-$('#senderCompany').val("Viabull LLC");
- $('#senderAddress').val("123 Fake Street");
-$('#senderAddress2').val("Southern, CA 12345");
-$('#senderEmail').val("myFakeEmail@google.com");
-$('#senderTele').val("(123)-123-1234");
-$('#senderSlogan').val("Invest");
-$('#recName').val("Johnsku Holdings Corp.")
-$('#recCompanyAdd').val("123 Fake Road")
-$('#recCompanyAdd2').val("Northern, CA 12345")
-}
+
 
 // console.log(senderCompany.text($(senderCompany).val()))
