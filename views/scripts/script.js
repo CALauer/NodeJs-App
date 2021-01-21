@@ -405,7 +405,6 @@ let ajaxReqPostInvoice = () => {
         type: "POST",
         data: formData,
         success: function(res) {
-            console.log(res)
         if (res.success == true) {
             // alertBox.html(alertMsg) 
             data = res.data
@@ -441,6 +440,7 @@ let revealData = (data) => {
     }
 }
 let renderTotals = (data) => {
+    data = data
     items = $('#items-table')
     displayedGrand = $('#grand-total')
     grandTotal = 0;
@@ -457,47 +457,52 @@ let renderTotals = (data) => {
         mySubtotal.push(subtotal)
         } else {
         mySubtotal.pop()  
-        mySubtotal.push(mySubtotal)  
+        mySubtotal.push(subtotal)  
+        console.log(mySubtotal)
         }
         items.append(
             '<tr><td><h4 class="heading-style-4 print-color-1">'+data.itemName[i]+'</h4><p class="print-color-2 fs-small italic">'+data.itemDesc[i]+'</p></td><td class="align-center">'+data.itemQty[i]+'</td><td class="align-center">$'+data.itemPrice[i]+'</td><td class="align-right">$'+itemtotal.toFixed(2)+'</td></tr>')
 
     }
-    items.append("</table></div>")
-    if(taxrate > 0 && discount > 0) {
-        saved = discount / 100 * mySubtotal
-        newSubtotal = mySubtotal - saved;
-        taxed = taxrate / 100 * newSubtotal
-        total = newSubtotal + taxed
-        myTotal.push(total.toFixed(2))
-        myTax.push(taxed.toFixed(2))
-        myDiscount.push(saved.toFixed(2))
-        mySubtotal.pop()
-        mySubtotal.push(newSubtotal.toFixed(2))
- }
-    // } else if ((taxrate > 0) && (discount == 0)) {
-    //    taxed = taxrate / 100 * grandTotal 
-    //    grandTotal = grandTotal + taxed
-    //    myTax.push(taxed)
-    //    myTotal.pop()
-    //    myTotal.push(grandTotal)
-    // } else {
-    //     saved = discount / 100 * grandTotal
-    //     myDiscount.push(saved)
-    // }
-    renderThanks(data)
+    calcTotals(data)
 }
 
-let renderThanks = (data) => {
+let calcTotals = (data) => {
+    console.log(data)
+    taxrate = data.taxrate
+    discout = data.discount
+    console.log(mySubtotal)
+
+    items.append("</table></div>")
+    if(taxrate > 0 && discount > 0) {
+        console.log(taxrate)
+        saved = discount / 100 * mySubtotal
+        newSubtotal = mySubtotal - saved;
+        console.log(newSubtotal)
+        mySubtotal.pop()
+        mySubtotal.push(newSubtotal)
+        console.log(newSubtotal)
+        // SUBTRACT TAXES 
+        taxed = taxrate / 100 * newSubtotal
+        newTotal = newSubtotal + taxed
+        myTotal.push(newTotal)
+        myTax.push(taxed)
+        myDiscount.push(saved)
+        mySubtotal.pop()
+        renderThanks(saved, taxed, newSubtotal, newTotal)
+    }
+}
+
+let renderThanks = (saved, taxed, newSubtotal, newTotal) => {
     thanks = $('#thanks')
-    thanks.html('<table class="totals-table"><tr><td class="print-color-2">Discount:</td><td class="align-right pad-left-20 bold" id="discount">$'+myDiscount+'</td></tr><tr><td class="print-color-2">Subtotal:</td><td class="align-right pad-left-20 bold"id="subtotal">$'+mySubtotal+'</td></tr><tr><td class="print-color-2">Tax:</td><td class="align-right pad-left-20 bold" id="taxed">$'+myTax+'</td></tr><tr><td class="print-color-2">Total:</td><td class="align-right pad-left-20 bold" id="grand-total-2">$'+myTotal+'</td></tr></table></div><div class="align-left"><h3 class="heading-style-3 print-color-1" id="senderMsg">Thank you for your business!</h3><p class="print-color-2" id="senderTitle"></p><p class="print-color-1" id="senderFullName"></p><button class="btn-style-save" onclick="window.print()">Print</button></div>')
+    thanks.html('<table class="totals-table"><tr><td class="print-color-2">Discount:</td><td class="align-right pad-left-20 bold" id="discount">$'+saved.toFixed(2)+'</td></tr><tr><td class="print-color-2">Subtotal:</td><td class="align-right pad-left-20 bold"id="subtotal">$'+newSubtotal.toFixed(2)+'</td></tr><tr><td class="print-color-2">Tax:</td><td class="align-right pad-left-20 bold" id="taxed">$'+taxed.toFixed(2)+'</td></tr><tr><td class="print-color-2">Total:</td><td class="align-right pad-left-20 bold" id="grand-total-2">$'+newTotal.toFixed(2)+'</td></tr></table></div><div class="align-left"><h3 class="heading-style-3 print-color-1" id="senderMsg">Thank you for your business!</h3><p class="print-color-2" id="senderTitle"></p><p class="print-color-1" id="senderFullName"></p><button class="btn-style-save" onclick="window.print()">Print</button></div>')
     $([ document.documentElement, document.body ]).animate(
         {
             scrollTop: ($('#invoiceHead').offset().top - 60 )
         },
         800
     );
-    $('#grand-total').html("$" +myTotal)
+    $('#grand-total-main').html(myTotal)
 }
 
 
