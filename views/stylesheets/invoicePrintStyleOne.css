@@ -5,7 +5,7 @@
     --print-color-2: rgb(58, 58, 58);
 }
 
-nav, .global-wrapper {
+nav, .global-wrapper, .btn-style-save {
     display: none;
 }
 .invoice-preview-wrapper {

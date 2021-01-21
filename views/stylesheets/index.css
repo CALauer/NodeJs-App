@@ -30,8 +30,8 @@
     --two-columns-style-three: 3fr 1fr;
     --two-columns-style-four: 2fr 1fr;
     --one-column: 1fr 1fr;
-    --print-color-1: rgb(255, 92, 51);
-    --print-color-2: rgb(255, 128, 96);
+    --print-color-1: rgb(255, 255, 255);
+    --print-color-2: rgb(122, 122, 122);
 }
 h1 {
     margin-bottom: 10px;
