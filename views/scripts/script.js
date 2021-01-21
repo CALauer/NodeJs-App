@@ -284,6 +284,7 @@ let cancelAction = () => {
 $(document).on("click", '#removeItemForm-btn', function(e) {
         $(this).parent().remove()
 })
+
 let sendInvoice = () => {
  //get input, select, textarea of form
  let sender = $('#senderCompany').val();
@@ -358,37 +359,46 @@ let sendInvoice = () => {
                     }
                     else {
                     formData = $('#generateInvoice').serialize()
-                    $.ajax({
-                        url: "/recInvoice",
-                        type: "POST",
-                        data: formData,
-                        success: function(res) {
-                            console.log(res)
-                        if (res.success == true) {
-                            alertMsg = "Your account has been created. Please login.";
-                            // alertBox.html(alertMsg) 
-                            data = res.data
-                                myMsg = "Your invoice is ready"
-                                let myAlert = new Alert(myMsg);
-                                myAlert.success();
-                                revealData(data)
-                            }
-                            
-                        else {
-                            myMsg = "Something went wrong"
-                            let myAlert = new Alert(myMsg);
-                            myAlert.success();  
-                                }
-                            }
-                        })
-                    }
+                    // ajaxReqPostInvoice()
+                    ajaxReqPostInvoice()
+                    
                 }
+            }
             })        
         }
     }
 }
 
+let ajaxReqPostInvoice = () => {
+    $.ajax({
+        url: "/recInvoice",
+        type: "POST",
+        data: formData,
+        success: function(res) {
+            console.log(res)
+        if (res.success == true) {
+            // alertBox.html(alertMsg) 
+            data = res.data
+                myMsg = "Your invoice is ready"
+                let myAlert = new Alert(myMsg);
+                myAlert.success();
+                revealData(data)
+            }
+            
+        else {
+            myMsg = "Something went wrong"
+            let myAlert = new Alert(myMsg);
+            myAlert.success();  
+                }
+            }
+        })
+    }
+mySubtotal = []    
+myTotal = []   
+myDiscount = []
+myTax = []
 let revealData = (data) => {
+
     if(!data.itemName.length) {
         alertMsg = 
         alertMsg = "You must add items to the form."
@@ -398,51 +408,78 @@ let revealData = (data) => {
     } else {
         invoiceHead = $('#invoiceHead') 
         $('#item-input-form').remove()
-        invoiceHead.html(
-        '<div><h1>'+data.senderName+'</h1>'+
-        '<p>'+data.senderAddress+'</p>'+
-        '<p>'+data.senderAddress2+'</p>'+
-        '<p>'+data.senderEmail+'</p>'+
-        '<p>'+data.senderTele+'</p>'+
-        '<p><h2>Receivers Information</h2></p>'+
-
-        '<p>'+data.recName+'</p>'+
-        '<p>'+data.recCompanyAdd+'</p>'+
-        '<p>'+data.recCompanyAdd2+'</p>'+
-        '<h3>Items</h3><div><table width="100%" id="itemization">'+
-        '<tr>'+
-            '<th>Item Name</th>'+
-            '<th>Item Description</th>'+
-            '<th>Item Qty</th>'+
-            '<th>Item Price</th>'+
-            '<th>Items Total</th></tr></table>'
-        )
+        invoiceHead.html('<div class="invoice-one-column-head"><div><h1 class="heading-style-2 print-color-1">'+data.senderName+'</h1><h4 class="heading-style-3 print-color-1">Company Slogan</h4></div><div class="pad-top-20"><h4 class="heading-style-4 print-color-1">'+data.senderAddress+'</h4><h4 class="heading-style-4 print-color-1">'+data.senderAddress2+'</h4></div></div><div class="invoice-two-column-head"><div><h1 class="heading-style-1 print-color-1">Invoice</h1><h4 class="heading-style-4 print-color-2">#0001</h4></div><div class="inline"><ul><li class="print-li print-color-2">'+data.senderEmail+'</li><li class="print-li print-color-2">'+data.senderTele+'</li></ul></div></div><div class="invoice-two-column-head-rec-details"><div><h2 class="heading-style-2 print-color-1">Invoice To:</h2><h3 class="heading-style-3 print-color-1">'+data.recName+'</h3><p class="print-color-2 fs-med">'+data.recCompanyAdd+'</p><p class="print-color-2 fs-med">'+data.recCompanyAdd2+'</p></div><div><table class="invoice-display-table"><tr class="underline"><td class="print-color-1">Total Due:</td><td class="print-color-1 bold align-right" id="grand-total"></td></tr><tr><td class="print-color-2">Invoice No:</td><td class="align-right print-color-1 pad-left-20">#0001</td></tr><tr><td class="print-color-2">Invoice Date</td><td class="align-right print-color-1 pad-left-20">Janurary 20, 2021</td></tr></table></div></div><div class="items-display"><table class="items-table" id="items-table"><tr><th>Items Description</th><th class="align-center">QTY</th><th class="align-center">PRICE</th><th class="align-right">TOTAL</th></tr>')
         renderTotals(data)
     }
 }
-    
 let renderTotals = (data) => {
-    items = $('#itemization')
+    items = $('#items-table')
+    displayedGrand = $('#grand-total')
     grandTotal = 0;
+    subtotal = 0
+    discount = 0
+    taxrate = 0
     for(i = 0; i <data.itemName.length; i++) {
+        // GENERATING ITEMIZED TOTALS
         total =  data.itemQty[i] * data.itemPrice[i]
         grandTotal = grandTotal + total;
-        myTotal =  grandTotal
+        // GENERATING GRAND TOTAL
+        if( myTotal.length == 0) {
+        myTotal.push(grandTotal)
+        } else {
+        myTotal.pop()  
+        myTotal.push(grandTotal)  
+        }
         items.append(
-            '<tr><td>'+data.itemName[i]+'</td>'+
-            '<td>'+data.itemDesc[i]+'</td>'+
-            '<td>'+data.itemQty[i]+'</td>'+
-                '<td>'+data.itemPrice[i]+'</td>'+
-                '<td>'+total.toFixed(2)+'</td>'+
-                '<td>' +grandTotal.toFixed(2)+'</td>'+
-            '</tr>')
+            '<tr><td><h4 class="heading-style-4 print-color-1">'+data.itemName[i]+'</h4><p class="print-color-2 fs-small italic">'+data.itemDesc[i]+'</p></td><td class="align-center">'+data.itemQty[i]+'</td><td class="align-center">$'+data.itemPrice[i]+'</td><td class="align-right">$'+total.toFixed(2)+'</td></tr>')
+
     }
+    items.append("</table></div>")
+    displayedGrand.html("$" +myTotal)
+    // if((taxrate > 0) && (discount > 0)) {
+    //    saved = discount / 100 * grandTotal
+    //    subtotal = grandTotal - saved
+    //    taxed = taxrate / 100 * grandTotal
+    //    grandTotal = grandTotal + taxed
+    //    mySubtotal.push(subtotal)
+    //    myTotal.pop()
+    //    myTotal.push(grandTotal)
+    //    myDiscount.push(saved)
+    //    myTax.push(taxed)
+    // } else if ((taxrate > 0) && (discount == 0)) {
+    //    taxed = taxrate / 100 * grandTotal 
+    //    grandTotal = grandTotal + taxed
+    //    myTax.push(taxed)
+    //    myTotal.pop()
+    //    myTotal.push(grandTotal)
+    // } else {
+    //     saved = discount / 100 * grandTotal
+    //     myDiscount.push(saved)
+    // }
     renderThanks(data)
 }
+
 let renderThanks = (data) => {
-    note = $('#note')
-    msg = "A custumized message here, along with your personal info like name, and title."
-    note.html("<div>"+msg+"<div><button type='button' class='btn-style-save'>Save</button></div></div>")
+    thanks = $('#thanks')
+    thanks.append('<table class="totals-table"><tr><td class="print-color-2">Subtotal:</td><td class="align-right pad-left-20 bold" id="subtotal">$1200.00</td></tr><tr><td class="print-color-2">Sales Tax:</td><td class="align-right pad-left-20 bold"id="taxed">$0.00</td></tr><tr><td class="print-color-2">Discount:</td><td class="align-right pad-left-20 bold" id="saved">$0.00</td></tr><tr><td class="print-color-2">Total:</td><td class="align-right pad-left-20 bold" id="grand-total-2">$1200.00</td></tr></table></div><div class="align-left"><h3 class="heading-style-3 print-color-1" id="senderMsg">Thank you for your business!</h3><p class="print-color-2" id="senderTitle">Title</p><p class="print-color-1" id="senderFullName">Your Name Here</p><button class="btn-style-save" onclick="window.print()">Print</button></div>')
+    $([ document.documentElement, document.body ]).animate(
+        {
+            scrollTop: ($('#invoiceHead').offset().top - 60 )
+        },
+        800
+    );
+}
+let preloadInvoice = () => {
+     //get input, select, textarea of form
+$('#senderCompany').val("Viabull LLC");
+ $('#senderAddress').val("123 Fake Street");
+$('#senderAddress2').val("Southern, CA 12345");
+$('#senderEmail').val("myFakeEmail@google.com");
+$('#senderTele').val("(123)-123-1234");
+$('#senderSlogan').val("Invest");
+$('#recName').val("Johnsku Holdings Corp.")
+$('#recCompanyAdd').val("123 Fake Road")
+$('#recCompanyAdd2').val("Northern, CA 12345")
 }
 
 // console.log(senderCompany.text($(senderCompany).val()))

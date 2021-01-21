@@ -38,39 +38,45 @@
                     </div>
                     <div class="buttons-display">
                        <div></div><div></div>
+                       <a href="javascript:void(0)" onclick="preloadInvoice()">Pre-load</a>
                         <button class="invoice-sbt-btn" type="button" onclick="sendInvoice()">Preview</button>
                     </div>
                     </div>
                 </form>
-            </div> 
-            <div>
-                <div class="invoice-preview" id="invoiceHead">
-                    </div>
-                    <div class="invoice-note">
-                        <h4>Future Member Features</h4>
-                        <ul>
-                            <li>Dynamically Generated Invoice Numbers</li>
-                            <li>Your information as a sender will automatically be applied, or you can choose & save presets</li>
-                            <li>Custom Logo Upload</li>
-                            <li>Template Access</li>
-                            <li>Editable Preview</li>
-                            <li>Customizable Note</li>
-                        </ul>
-                        <br />
-                        <h4>Visitors</h4>
-                        <ul>
-                            <li>You cannot save your invoice</li>
-                            <li>Invoice Number will always be #0001</li>
-                            <li>You cannot add a logo</li>
-                            <li>Limited to the default template</li>
-                        </ul>
-                        <br />
-                        <h4>Hit <span class="orange">[CTRL + P]</span> for printable invoice once submitted</h4> 
-                    </div>
-
             </div>
-
+            <div class="main-container">
+                <h4>Future Member Features</h4>
+                <ul>
+                    <li>Dynamically Generated Invoice Numbers</li>
+                    <li>Your information as a sender will automatically be applied, or you can choose & save presets</li>
+                    <li>Custom Logo Upload</li>
+                    <li>Template Access</li>
+                    <li>Editable Preview</li>
+                    <li>Customizable Note</li>
+                </ul>
+                <br />
+                <h4>Visitors</h4>
+                <ul>
+                    <li>You cannot save your invoice</li>
+                    <li>Invoice Number will always be #0001</li>
+                    <li>You cannot add a logo</li>
+                    <li>Limited to the default template</li>
+                </ul>
+                <br />
+                <h4>Hit <span class="orange">[CTRL + P]</span> for printable invoice once submitted</h4> 
+            </div> 
+        </div>
     </div>
+    <div class="invoice-displayed-wrapper">
+
+        <div class="invoice-preview-wrapper" id="invoiceHead">
+        </div>
+        <div class="invoice-preview-wrapper">
+        <div id="thanks" class="totals">
+        </div>
+    </div>
+
+
 </main>
 
 <%- include('./partials/footer'); %>
