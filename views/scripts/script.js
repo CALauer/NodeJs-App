@@ -1,5 +1,9 @@
 $(document).ready(function() {
     var dirName =  window.location.pathname;
+    let accountOverview =  $('.account-overview')
+    let accountWritePost = $('.account-write-post')
+    let accountPosts = $('.account-posts')
+    let i= 0
     $('#preloadInvoice').on('click', function(){
 
 
@@ -138,7 +142,23 @@ $(document).ready(function() {
     $('#insertForm').on('click', function() {
         renderItemForm();
     });
-    i= 0
+    $('#account_overview').on('click', function() {
+        accountPosts.fadeIn().css("display", "none")
+        accountWritePost.css("display", "none")
+        accountOverview.css("display", "grid")
+    });
+    $('#post_write').on('click', function() {
+        accountPosts.fadeIn().css("display", "none")
+        accountWritePost.css("display", "grid")
+        accountOverview.css("display", "none")
+    });
+    $('#my_posts').on('click', function() {
+        accountPosts.fadeIn().css("display", "grid")
+        accountWritePost.css("display", "none")
+        accountOverview.css("display", "none")
+        displayUserPost()
+    });
+
 function renderItemForm() {
     console.log("clicked")
     form = $('#item-form-container')
@@ -189,9 +209,7 @@ if(window.location.pathname == "/feed") {
     }
 
 });    
-let accountOverview =  $('.account-overview')
-let accountWritePost = $('.account-write-post')
-let accountPosts = $('.account-posts')
+
 alertBox = $('#alert_box')
 class Alert {
     constructor(message) {
@@ -310,9 +328,9 @@ function displayUserPost() {
                 myContent.innerHTML += '<div class="blog-content">' + '<ul><li><h4>' + data[i].title + '</h4></li><li class="username"><a href="/profileView/'+ data[i].username +'" id="'+ data[i].blogId +'">' + data[i].username + '</a></li><li class="date">' + data[i].date + '</li></ul><div class="blog-body">' + data[i].post + '</div><div id="'+ data[i].blogId +'" class="blog_actions">' +
                 '<ul class="blog_action_buttons_ul"><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Edit</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Remove</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Like</a></li><li class="blog_action_buttons_li"><a href="javascript:void(0)" id="'+ data[i].blogId +'">Dislike</a></li></ul>'
             } 
-            accountPosts.fadeIn().css("display", "grid")
-            accountWritePost.css("display", "none")
-            accountOverview.css("display", "none")
+            // accountPosts.fadeIn().css("display", "grid")
+            // accountWritePost.css("display", "none")
+            // accountOverview.css("display", "none")
         } else {
             alertMsg = res.failed
             console.log(res.failed)

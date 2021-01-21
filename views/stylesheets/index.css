@@ -224,6 +224,7 @@ footer {
     width: 400px;
     justify-self: center;
 }
+
 input[type] {
 	border: none;
     height: 35px;
@@ -240,6 +241,17 @@ input[type] {
 }
 .user-post-form {
     width: 60%;
+}
+.user-post-form input[type] {
+    border: none;
+    margin: 10px 0px;
+    vertical-align: middle;
+	border-radius: 2px;
+	border: none;
+	background:rgb(14, 7, 0);
+	font-size: inherit;
+    padding: 5px;
+    color: var(--light-grey-color);
 }
 .post-input-area {
     border: none;
