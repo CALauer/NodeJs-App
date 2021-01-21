@@ -469,26 +469,50 @@ let renderTotals = (data) => {
 
 let calcTotals = (data) => {
     console.log(data)
-    taxrate = data.taxrate
-    discout = data.discount
-    console.log(mySubtotal)
-
+    if(data.taxrate.length <=0) {
+        taxrate = 0
+    } else {
+        taxrate = data.taxrate
+    }
+    if(data.discount.length <= 0){
+        discont = 0
+    } else {
+        discount = data.discount
+    }
+    console.log(discount)
+    console.log(taxrate)
+    OrigSubtotal = mySubtotal[0]
     items.append("</table></div>")
     if(taxrate > 0 && discount > 0) {
-        console.log(taxrate)
-        saved = discount / 100 * mySubtotal
-        newSubtotal = mySubtotal - saved;
-        console.log(newSubtotal)
-        mySubtotal.pop()
-        mySubtotal.push(newSubtotal)
-        console.log(newSubtotal)
-        // SUBTRACT TAXES 
+        console.log("DISCOUNT AND TAX")
+        // Subtract DISCOUNT FROM SUBTOTAL
+        saved = discount / 100 * OrigSubtotal
+        newSubtotal = OrigSubtotal - saved;
+        // SUBTRACT TAXES FROM NEW SUBTOTAL 
         taxed = taxrate / 100 * newSubtotal
         newTotal = newSubtotal + taxed
-        myTotal.push(newTotal)
-        myTax.push(taxed)
-        myDiscount.push(saved)
-        mySubtotal.pop()
+        // RENDER 
+        renderThanks(saved, taxed, newSubtotal, newTotal)
+    } else if((taxrate > 0) && (discount == 0)) {
+        console.log("TAX ONLY")
+        saved = 0
+        newSubtotal = OrigSubtotal
+        taxed = taxrate / 100 * newSubtotal
+        newTotal = newSubtotal + taxed
+        renderThanks(saved, taxed, newSubtotal, newTotal)
+    } else if ((taxrate == 0) && (discount > 0)) {
+        console.log("DISCOUNT ONLY")
+        taxed = 0
+        saved = discount / 100 * OrigSubtotal
+        newSubtotal = OrigSubtotal - saved;
+        newTotal = newSubtotal
+        renderThanks(saved, taxed, newSubtotal, newTotal)
+    } else {
+        console.log("NO DISCOUNT OR TAX")
+        taxed = 0;
+        saved = 0
+        newSubtotal = OrigSubtotal
+        newTotal = newSubtotal
         renderThanks(saved, taxed, newSubtotal, newTotal)
     }
 }
