@@ -233,7 +233,7 @@ input[type] {
 	border: none;
 	font-size: 1.1em;
 	padding: 5px;
-	color: var(--secondary-heading-color);
+	color: black;
 }
 .post-input-area:focus, input[type]:focus  {
 	border: solid .5px var(--orange-color);
